@@ -1,0 +1,22 @@
+[
+{
+  "directory": "/home/ucantseeit/my_pro/scheme/my_scheme/build",
+  "command": "/usr/bin/g++   -g -g -std=gnu++17 -o CMakeFiles/test.o.dir/test.cpp.o -c /home/ucantseeit/my_pro/scheme/my_scheme/test.cpp",
+  "file": "/home/ucantseeit/my_pro/scheme/my_scheme/test.cpp"
+},
+{
+  "directory": "/home/ucantseeit/my_pro/scheme/my_scheme/build",
+  "command": "/usr/bin/g++   -g -g -std=gnu++17 -o CMakeFiles/test.o.dir/Pair.cpp.o -c /home/ucantseeit/my_pro/scheme/my_scheme/Pair.cpp",
+  "file": "/home/ucantseeit/my_pro/scheme/my_scheme/Pair.cpp"
+},
+{
+  "directory": "/home/ucantseeit/my_pro/scheme/my_scheme/build",
+  "command": "/usr/bin/g++   -g -g -std=gnu++17 -o CMakeFiles/test.o.dir/scheme.cpp.o -c /home/ucantseeit/my_pro/scheme/my_scheme/scheme.cpp",
+  "file": "/home/ucantseeit/my_pro/scheme/my_scheme/scheme.cpp"
+},
+{
+  "directory": "/home/ucantseeit/my_pro/scheme/my_scheme/build",
+  "command": "/usr/bin/g++   -g -g -std=gnu++17 -o CMakeFiles/test.o.dir/tokenizer.cpp.o -c /home/ucantseeit/my_pro/scheme/my_scheme/tokenizer.cpp",
+  "file": "/home/ucantseeit/my_pro/scheme/my_scheme/tokenizer.cpp"
+}
+]
