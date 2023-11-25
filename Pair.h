@@ -1,5 +1,5 @@
-#ifndef LEPTJSON_H__
-#define LEPTJSON_H__
+#ifndef PAIR_H__
+#define PAIR_H__
 
 typedef enum {NIL, OPERATOR, LITERAL, SUBEXPR} DataType;
 class Pair {
