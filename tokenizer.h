@@ -31,6 +31,9 @@ namespace Tokenizer {
             std::cout << std::endl;
         }
 
+        const vector<token> &get_tokens() const {
+            return tokens;
+        }
     };
 }
 

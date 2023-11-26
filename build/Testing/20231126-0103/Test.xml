@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Site BuildName="Linux-g++"
+	BuildStamp="20231126-0103-Experimental"
+	Name="Diane"
+	Generator="ctest-3.22.1"
+	CompilerName="/usr/bin/g++"
+	CompilerVersion="11.4.0"
+	OSName="Linux"
+	Hostname="Diane"
+	OSRelease="5.15.133.1-microsoft-standard-WSL2"
+	OSVersion="#1 SMP Thu Oct 5 21:02:42 UTC 2023"
+	OSPlatform="x86_64"
+	Is64Bits="1"
+	VendorString="GenuineIntel"
+	VendorID="Intel Corporation"
+	FamilyID="6"
+	ModelID="186"
+	ProcessorCacheSize="12288"
+	NumberOfLogicalCPU="16"
+	NumberOfPhysicalCPU="8"
+	TotalVirtualMemory="4096"
+	TotalPhysicalMemory="15814"
+	LogicalProcessorsPerPhysical="2"
+	ProcessorClockFrequency="2188.8"
+	>
+	<Testing>
+		<StartDateTime>Nov 26 09:03 CST</StartDateTime>
+		<StartTestTime>1700960634</StartTestTime>
+		<TestList/>
+		<EndDateTime>Nov 26 09:03 CST</EndDateTime>
+		<EndTestTime>1700960634</EndTestTime>
+		<ElapsedMinutes>0</ElapsedMinutes>
+	</Testing>
+</Site>
