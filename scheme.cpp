@@ -10,7 +10,7 @@ namespace Pair_{
     int eval_expr(const Pair &expr) {
         using std::cout, std::endl, std::vector;
         if (expr.get_type() != OPERATOR) {
-        cout << "Syntax Error: invalid operator" << endl;
+            cout << "Syntax Error: invalid operator" << endl;
         }
         
         vector<int> arguments;
@@ -18,15 +18,15 @@ namespace Pair_{
         for (; track->get_type()!=NIL;
             track = track->get_next()) {
             if (track->get_type() == LITERAL) {
-                arguments.push_back(track->get_item().literal);
+                arguments.push_back(std::get<int>(track->get_item()));
             } else if (track->get_type() == SUBEXPR) {
-                arguments.push_back(eval_expr(*track->get_item().subexpr));
+                arguments.push_back(eval_expr(*std::get<Pair*>(track->get_item())));
             } else {
                 cout << "Type Error" << endl;
             }       
         }
 
-        switch (expr.get_item().opr) {
+        switch (std::get<string>(expr.get_item()).at(0)) {
             case '+':
                 return std::accumulate(arguments.begin(), arguments.end(), 0);
                 break;

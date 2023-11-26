@@ -1,45 +1,41 @@
 #ifndef PAIR_H__
 #define PAIR_H__
 #include <variant>
+#include <string>
+#include <vector>
+#include <variant>
 
 
 namespace Pair_{
-    using std::variant;
-
+    using std::string, std::vector, std::variant;
     typedef enum {NIL, OPERATOR, LITERAL, SUBEXPR} DataType;
     struct Nil {
         
     };
-    typedef variant<Nil, std::string, int, Pair*> Item;
 
     class Pair {
     private:
-        union Item {
-            char opr;
-            int literal;
-            Pair *subexpr;    
-        };
-        DataType type = NIL;
-        Item item;
+        typedef variant<Nil, std::string, int, Pair*> Item;
+        Item item = Nil();
         Pair *next = nullptr;
 
         void help_display() const;
         
     public:  
         Pair() = default;
-        Pair(const Pair &);
 
-        Pair(char ch) : type(OPERATOR) {item.opr = ch; next = new Pair();}
-        Pair(int i) : type(LITERAL) {item.literal = i; next = new Pair();}
+        explicit Pair(const Pair &);
+        explicit Pair(const string &str) {item= str; next = new Pair();}
+        explicit Pair(int i) {item = i; next = new Pair();}
+
         Pair(int i, const Pair &_next) : Pair(i) {next = new Pair(_next);}
-        Pair(char ch, const Pair &_next) : Pair(ch) {next = new Pair(_next);} 
+        Pair(const string &str, const Pair &_next) : Pair(str) {next = new Pair(_next);} 
         Pair(const Pair &_subexpr, const Pair &_next) {
-            type = SUBEXPR;
-            item.subexpr = new Pair(_subexpr);
+            item= new Pair(_subexpr);
             next = new Pair(_next);
         }   
         Item get_item() const {return item;}
-        DataType get_type() const {return type;}
+        DataType get_type() const {return static_cast<DataType>(item.index());}
         Pair *get_next() {return next;};
         const Pair *get_next() const {return next;};
 

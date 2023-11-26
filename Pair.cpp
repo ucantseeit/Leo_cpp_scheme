@@ -8,9 +8,8 @@ namespace Pair_{
         Pair *track_d = this;
         for (; track_s->next != nullptr; 
             track_s = track_s->next) {
-            track_d->type = track_s->type;
-            if (track_s->type == SUBEXPR) {
-                track_d->item.subexpr = new Pair(*track_s->item.subexpr);
+            if (track_s->get_type() == SUBEXPR) {
+                track_d->item = new Pair(*std::get<Pair*>(track_s->item));
             } else {
                 track_d->item = track_s->item;
             }
@@ -27,18 +26,18 @@ namespace Pair_{
         
         while (track->next != nullptr) {
             cout << "Pair(";
-            switch (track->type) {
+            switch (track->get_type()) {
                 case NIL:
                     cout << "NIL, ";
                     break;
                 case OPERATOR:
-                    cout << track->item.opr << ", ";
+                    cout << std::get<string>(track->item) << ", ";
                     break;
                 case LITERAL:
-                    cout << track->item.literal << ", ";
+                    cout << std::get<int>(track->item) << ", ";
                     break;
                 case SUBEXPR:
-                    track->item.subexpr->help_display();
+                    std::get<Pair*>(track->item)->help_display();
                     cout << ", ";
                     break;
             }
@@ -46,7 +45,6 @@ namespace Pair_{
             track = track->next;
         }
 
-        assert(NIL == track->type);
         cout << "NIL";
         void insert(int);
         for (int i = 0; i < count; i++) {

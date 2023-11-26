@@ -8,7 +8,7 @@
 #include <exception>
 
 namespace Parser {
-    using std::string, std::vector, std::valarray;
+    using std::string, std::vector, std::variant;
 
     parser::parser(const Tokenizer::tokenizer &input) {
         auto tokens = input.get_tokens();

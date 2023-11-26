@@ -3,6 +3,8 @@
 #include "tokenizer.h"
 
 using namespace std;
+using namespace Pair_;
+using namespace Tokenizer;
 
 static void test_display() {
     Pair p(1);
@@ -14,11 +16,11 @@ static void test_display() {
 }
 
 static void test_calc() {
-    Pair expr = Pair('+', Pair(1, Pair(2)));
+    Pair expr = Pair("+", Pair(1, Pair(2)));
     cout << eval_expr(expr) << endl;
 
-    Pair expr1 = Pair('/', 
-                        Pair(Pair('-', Pair(5, Pair(3))), Pair(2)));
+    Pair expr1 = Pair("/", 
+                        Pair(Pair("-", Pair(5, Pair(3))), Pair(2)));
     cout << eval_expr(expr1) << endl; 
 }
 
