@@ -7,18 +7,18 @@
 #include <numeric>
 
 namespace Pair_{
-    int eval_expr(const Pair &expr) {
+    float eval_expr(const Pair &expr) {
         using std::cout, std::endl, std::vector;
         if (expr.get_type() != OPERATOR) {
             cout << "Syntax Error: invalid operator" << endl;
         }
         
-        vector<int> arguments;
+        vector<float> arguments;
         const Pair *track = expr.get_next();
         for (; track->get_type()!=NIL;
             track = track->get_next()) {
             if (track->get_type() == LITERAL) {
-                arguments.push_back(std::get<int>(track->get_item()));
+                arguments.push_back(std::get<float>(track->get_item()));
             } else if (track->get_type() == SUBEXPR) {
                 arguments.push_back(eval_expr(*std::get<Pair*>(track->get_item())));
             } else {
@@ -32,15 +32,15 @@ namespace Pair_{
                 break;
             case '-':
                 return std::accumulate(arguments.begin()+1, arguments.end(), 
-                                arguments[0], std::minus<int>());
+                                arguments[0], std::minus<float>());
                 break;
             case '*':
                 return std::accumulate(arguments.begin(), arguments.end(), 
-                                1, std::multiplies<int>());
+                                1, std::multiplies<float>());
                 break;
             case '/':
                 return std::accumulate(arguments.begin()+1, arguments.end(), 
-                                arguments[0], std::divides<int>());
+                                arguments[0], std::divides<float>());
                 break;
             default:
                 cout << "Invalid Operator1" << endl;

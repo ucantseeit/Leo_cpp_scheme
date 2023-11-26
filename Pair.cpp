@@ -34,7 +34,7 @@ namespace Pair_{
                     cout << std::get<string>(track->item) << ", ";
                     break;
                 case LITERAL:
-                    cout << std::get<int>(track->item) << ", ";
+                    cout << std::get<float>(track->item) << ", ";
                     break;
                 case SUBEXPR:
                     std::get<Pair*>(track->item)->help_display();
@@ -46,7 +46,6 @@ namespace Pair_{
         }
 
         cout << "NIL";
-        void insert(int);
         for (int i = 0; i < count; i++) {
             cout << ')';
         }
