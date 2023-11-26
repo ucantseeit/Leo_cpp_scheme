@@ -9,12 +9,12 @@ namespace Tokenizer {
     
 std::set<char>delimeter = {' ', '\t'};
 
-// return true if word is int, and int is the value
-bool get_word(const std::string word, int &i) {
+// return true if word is float, and float is the value
+bool get_word(const std::string word, float &i) {
     std::size_t pos;
 
     try {
-        i = std::stoi(word, &pos);
+        i = std::stof(word, &pos);
     } 
     // when the first char is not a number/+/-
     catch(...) {
@@ -33,7 +33,7 @@ tokenizer::tokenizer(const std::string &input) {
         // when meeting ( or )
         if (track == '(' || track == ')') {
             if (!word.empty()) {
-                int i;
+                float i;
                 if (get_word(word, i)) {
                     tokens.push_back(i);
                 } else {
@@ -49,7 +49,7 @@ tokenizer::tokenizer(const std::string &input) {
         if (delimeter.find(track)!=delimeter.end()) {
             // push back a word when the word is not empty
             if (!word.empty()) {
-                int i;
+                float i;
                 if (get_word(word, i)) {
                     tokens.push_back(i);
                 } else {

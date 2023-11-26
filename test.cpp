@@ -20,7 +20,7 @@ static void test_calc() {
     cout << eval_expr(expr) << endl;
 
     Pair expr1 = Pair("/", 
-                        Pair(Pair("-", Pair(5, Pair(3))), Pair(2)));
+                        Pair(Pair("-", Pair(5, Pair(4))), Pair(2)));
     cout << eval_expr(expr1) << endl; 
 }
 
@@ -32,6 +32,9 @@ static void test_tokenize() {
     string str1 = "(+ (w3e 3) ((i)))";
     tokenizer t1(str1);
     t1.display();
+    string str2 = "(2.5 3 3.654a k)";
+    tokenizer t2(str2);
+    t2.display();
 }
 
 int main() {

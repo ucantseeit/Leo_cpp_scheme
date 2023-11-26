@@ -11,8 +11,8 @@ namespace Tokenizer {
 
     extern std::set<char> delimeter;
 
-    enum token_type {INT_t, STR_t};
-    typedef variant<int, string> token;
+    enum token_type {FLOAT_t, STR_t};
+    typedef variant<float, string> token;
 
     class tokenizer {
     private:
@@ -22,8 +22,8 @@ namespace Tokenizer {
         explicit tokenizer(const string &);
         void display() const {
             for (token t : tokens) {
-                if (t.index() == INT_t) {
-                    std::cout << std::get<int>(t) << " ";
+                if (t.index() == FLOAT_t) {
+                    std::cout << std::get<float>(t) << " ";
                 } else {
                     std::cout << std::get<string>(t) << " ";
                 }
