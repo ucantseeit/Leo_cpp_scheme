@@ -18,5 +18,10 @@
   "directory": "/home/ucantseeit/my_pro/scheme/my_scheme/build",
   "command": "/usr/bin/g++   -g -g -std=gnu++17 -o CMakeFiles/test.o.dir/tokenizer.cpp.o -c /home/ucantseeit/my_pro/scheme/my_scheme/tokenizer.cpp",
   "file": "/home/ucantseeit/my_pro/scheme/my_scheme/tokenizer.cpp"
+},
+{
+  "directory": "/home/ucantseeit/my_pro/scheme/my_scheme/build",
+  "command": "/usr/bin/g++   -g -g -std=gnu++17 -o CMakeFiles/test.o.dir/parser.cpp.o -c /home/ucantseeit/my_pro/scheme/my_scheme/parser.cpp",
+  "file": "/home/ucantseeit/my_pro/scheme/my_scheme/parser.cpp"
 }
 ]

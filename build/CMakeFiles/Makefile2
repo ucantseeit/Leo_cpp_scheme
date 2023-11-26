@@ -837,12 +837,12 @@ CMakeFiles/ContinuousSubmit.dir/clean:
 CMakeFiles/test.o.dir/all:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.o.dir/build.make CMakeFiles/test.o.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.o.dir/build.make CMakeFiles/test.o.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ucantseeit/my_pro/scheme/my_scheme/build/CMakeFiles --progress-num=1,2,3,4,5 "Built target test.o"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --progress-dir=/home/ucantseeit/my_pro/scheme/my_scheme/build/CMakeFiles --progress-num=1,2,3,4,5,6 "Built target test.o"
 .PHONY : CMakeFiles/test.o.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/test.o.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/ucantseeit/my_pro/scheme/my_scheme/build/CMakeFiles 5
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/ucantseeit/my_pro/scheme/my_scheme/build/CMakeFiles 6
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/test.o.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/ucantseeit/my_pro/scheme/my_scheme/build/CMakeFiles 0
 .PHONY : CMakeFiles/test.o.dir/rule

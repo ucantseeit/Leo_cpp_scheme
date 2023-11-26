@@ -9,6 +9,7 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of dependency files which are needed:
 set(CMAKE_DEPENDS_DEPENDENCY_FILES
   "/home/ucantseeit/my_pro/scheme/my_scheme/Pair.cpp" "CMakeFiles/test.o.dir/Pair.cpp.o" "gcc" "CMakeFiles/test.o.dir/Pair.cpp.o.d"
+  "/home/ucantseeit/my_pro/scheme/my_scheme/parser.cpp" "CMakeFiles/test.o.dir/parser.cpp.o" "gcc" "CMakeFiles/test.o.dir/parser.cpp.o.d"
   "/home/ucantseeit/my_pro/scheme/my_scheme/scheme.cpp" "CMakeFiles/test.o.dir/scheme.cpp.o" "gcc" "CMakeFiles/test.o.dir/scheme.cpp.o.d"
   "/home/ucantseeit/my_pro/scheme/my_scheme/test.cpp" "CMakeFiles/test.o.dir/test.cpp.o" "gcc" "CMakeFiles/test.o.dir/test.cpp.o.d"
   "/home/ucantseeit/my_pro/scheme/my_scheme/tokenizer.cpp" "CMakeFiles/test.o.dir/tokenizer.cpp.o" "gcc" "CMakeFiles/test.o.dir/tokenizer.cpp.o.d"

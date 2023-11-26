@@ -160,4 +160,6 @@ CMakeFiles/test.o.dir/tokenizer.cpp.o: \
  /usr/include/c++/11/bits/stl_set.h \
  /usr/include/c++/11/bits/stl_multiset.h \
  /usr/include/c++/11/bits/erase_if.h \
- /home/ucantseeit/my_pro/scheme/my_scheme/tokenizer.h
+ /home/ucantseeit/my_pro/scheme/my_scheme/parser.h \
+ /home/ucantseeit/my_pro/scheme/my_scheme/tokenizer.h \
+ /home/ucantseeit/my_pro/scheme/my_scheme/Pair.h

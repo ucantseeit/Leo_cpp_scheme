@@ -3,6 +3,7 @@
 #include <string>
 #include <variant>
 #include <set>
+#include "parser.h"
 #include "tokenizer.h"
 
 namespace Tokenizer {

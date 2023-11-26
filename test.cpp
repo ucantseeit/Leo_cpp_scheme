@@ -1,6 +1,7 @@
 #include <iostream>
 #include "Pair.h"
 #include "tokenizer.h"
+#include "parser.h"
 
 using namespace std;
 using namespace Pair_;
@@ -37,8 +38,23 @@ static void test_tokenize() {
     t2.display();
 }
 
+static void test_parser() {
+    using namespace Parser;
+    using namespace Tokenizer;
+    string str = "(+ 1 2)";
+    tokenizer t = tokenizer(str);
+    parser p = parser(t);
+    p.get_expr().display();
+
+    string str1 = "(- (+ 1 2) 3)";
+    tokenizer t1 = tokenizer(str1);
+    parser p1 = parser(t1);
+    p1.get_expr().display();
+}
+
 int main() {
     test_display();
     test_calc();
     test_tokenize();
+    test_parser();
 }

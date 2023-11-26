@@ -1,7 +1,7 @@
 #include <iostream>
-#include "parser.h"
 #include "tokenizer.h"
 #include "Pair.h"
+#include "parser.h"
 #include <variant>
 #include <vector>
 #include <string>
@@ -15,18 +15,50 @@ namespace Parser {
         expr = help_cons_pair(tokens.begin(), tokens.end());
     }
 
-    Pair_::Pair &get_item(const Tokenizer::tokenizer &token) {
-
+    const Pair_::Pair::Item get_item(const Tokenizer::token &token) {
+        if (token.index() == Tokenizer::FLOAT_t) {
+            return std::get<float>(token);
+        } else {
+            string str = std::get<string>(token);
+            if (str == "NIL") {
+                return Pair_::Nil();
+            } else if (str == "(" || str == ")") {
+                std::cerr << "Unexpected token" << std::endl;
+                std::terminate();
+            } else {
+                return std::get<string>(token);
+            }
+        }
     }
 
-    Pair_::Pair *parser::help_cons_pair(tokenptr ptoken_b, tokenptr ptoken_e, tokenptr pnext=0) {
+    Pair_::Pair *parser::help_cons_pair(tokenptr ptoken, tokenptr ptoken_e) {
         using namespace Pair_;
         using namespace Tokenizer;
 
+        static int left_bracket = 0;
+        static tokenptr pnext = ptoken;
         Pair *result = new Pair();
-
-        
-
+        if (ptoken == ptoken_e) {
+            return result;
+        } else if (ptoken->index() == STR_t
+                    && std::get<string>(*ptoken) == "(") {
+            left_bracket++;
+            result->item = help_cons_pair(++ptoken, ptoken_e);
+            result->next = help_cons_pair(pnext, ptoken_e);
+        } else if (ptoken->index() == STR_t 
+                    && std::get<string>(*ptoken) == ")") {
+            left_bracket--;
+            pnext = ptoken+1;
+            return result;
+        } else if (left_bracket == 0) { 
+            result->item = get_item(*ptoken);
+            return result;
+        } else {
+            result->item = get_item(*ptoken);
+            result->next = help_cons_pair(++ptoken, ptoken_e);          
+            return result;
+        }
+        return result;
     }
 }
 

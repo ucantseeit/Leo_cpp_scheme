@@ -5,7 +5,6 @@
 #include <vector>
 #include <variant>
 
-
 namespace Pair_{
     using std::string, std::vector, std::variant;
     typedef enum {NIL, OPERATOR, LITERAL, SUBEXPR} DataType;
@@ -14,12 +13,14 @@ namespace Pair_{
     };
 
     class Pair {
-    private:
+    public:
         typedef variant<Nil, std::string, float, Pair*> Item;
+
         Item item = Nil();
         Pair *next = nullptr;
 
         void help_display() const;
+        
         
     public:  
         Pair() = default;
@@ -49,7 +50,6 @@ namespace Pair_{
         const Pair *get_next() const {return next;};
 
         void display() const;
-
     };
 
     float eval_expr(const Pair &expr);

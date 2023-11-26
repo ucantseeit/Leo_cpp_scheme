@@ -547,6 +547,30 @@ Pair.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.o.dir/build.make CMakeFiles/test.o.dir/Pair.cpp.s
 .PHONY : Pair.cpp.s
 
+parser.o: parser.cpp.o
+.PHONY : parser.o
+
+# target to build an object file
+parser.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.o.dir/build.make CMakeFiles/test.o.dir/parser.cpp.o
+.PHONY : parser.cpp.o
+
+parser.i: parser.cpp.i
+.PHONY : parser.i
+
+# target to preprocess a source file
+parser.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.o.dir/build.make CMakeFiles/test.o.dir/parser.cpp.i
+.PHONY : parser.cpp.i
+
+parser.s: parser.cpp.s
+.PHONY : parser.s
+
+# target to generate assembly for a file
+parser.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/test.o.dir/build.make CMakeFiles/test.o.dir/parser.cpp.s
+.PHONY : parser.cpp.s
+
 scheme.o: scheme.cpp.o
 .PHONY : scheme.o
 
@@ -662,6 +686,9 @@ help:
 	@echo "... Pair.o"
 	@echo "... Pair.i"
 	@echo "... Pair.s"
+	@echo "... parser.o"
+	@echo "... parser.i"
+	@echo "... parser.s"
 	@echo "... scheme.o"
 	@echo "... scheme.i"
 	@echo "... scheme.s"

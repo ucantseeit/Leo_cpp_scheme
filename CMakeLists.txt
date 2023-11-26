@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 set(CMAKE_EXPORT_COMPILE_COMMANDS True)
 
-add_executable(test.o test.cpp Pair.cpp scheme.cpp tokenizer.cpp)
+add_executable(test.o test.cpp Pair.cpp scheme.cpp tokenizer.cpp parser.cpp)
 
 set(CPACK_PROJECT_NAME ${PROJECT_NAME})
 set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
