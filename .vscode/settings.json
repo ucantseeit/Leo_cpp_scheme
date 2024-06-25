@@ -45,7 +45,9 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "typeinfo": "cpp",
-        "variant": "cpp"
+        "variant": "cpp",
+        "map": "cpp",
+        "cinttypes": "cpp"
     },
     "C_Cpp.default.compilerPath": "C:\\coding\\mingw64\\bin\\g++.exe"
 }

@@ -43,19 +43,19 @@ namespace Parser {
         } else if (ptoken->index() == STR_t
                     && std::get<string>(*ptoken) == "(") {
             left_bracket++;
-            result->item = help_cons_pair(++ptoken, ptoken_e);
-            result->next = help_cons_pair(pnext, ptoken_e);
+            result->put_item(help_cons_pair(++ptoken, ptoken_e));
+            result->put_next(help_cons_pair(pnext, ptoken_e));
         } else if (ptoken->index() == STR_t 
                     && std::get<string>(*ptoken) == ")") {
             left_bracket--;
             pnext = ptoken+1;
             return result;
         } else if (left_bracket == 0) { 
-            result->item = get_item(*ptoken);
+            result->put_item(get_item(*ptoken));
             return result;
         } else {
-            result->item = get_item(*ptoken);
-            result->next = help_cons_pair(++ptoken, ptoken_e);          
+            result->put_item(get_item(*ptoken));
+            result->put_next(help_cons_pair(++ptoken, ptoken_e));          
             return result;
         }
         return result;

@@ -15,7 +15,8 @@ namespace Pair_{
     class Pair {
     public:
         typedef variant<Nil, std::string, float, Pair*> Item;
-
+        
+    private:
         Item item = Nil();
         Pair *next = nullptr;
 
@@ -50,9 +51,15 @@ namespace Pair_{
         const Pair *get_next() const {return next;};
 
         void display() const;
+
+        void put_item(Item i) {this->item = i;}
+        void put_next(Pair *_next) {this->next = _next;}
+
+
     };
 
-    float eval_expr(const Pair &expr);
 }
+
+float eval_expr(const Pair_::Pair &expr);
 
 #endif
