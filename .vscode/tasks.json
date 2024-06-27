@@ -8,9 +8,11 @@
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
-				"${file}",
+				"parse.cpp",
+				"SList.cpp",
+				"tokenize.cpp",
 				"-o",
-				"${fileDirname}/${fileBasenameNoExtension}",
+				"${fileDirname}/a.out",
 				"-std=c++17"
 			],
 			"options": {

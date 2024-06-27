@@ -49,5 +49,6 @@
         "map": "cpp",
         "cinttypes": "cpp"
     },
-    "C_Cpp.default.compilerPath": "C:\\coding\\mingw64\\bin\\g++.exe"
+    "C_Cpp.default.compilerPath": "C:\\coding\\mingw64\\bin\\g++.exe",
+    "C_Cpp.errorSquiggles": "enabled"
 }
