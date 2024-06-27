@@ -7,5 +7,4 @@ typedef long long Int;
 typedef double Float;
 typedef std::string Symbol;
 
-
 #endif

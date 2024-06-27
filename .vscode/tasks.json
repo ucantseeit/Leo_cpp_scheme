@@ -9,7 +9,7 @@
 				"-fdiagnostics-color=always",
 				"-g",
 				"parse.cpp",
-				"SList.cpp",
+				"SyntaxTree.cpp",
 				"tokenize.cpp",
 				"-o",
 				"${fileDirname}/a.out",

@@ -15,8 +15,6 @@ namespace tokens {
     extern std::unordered_set<char> delimeter;
 
     vector<token> tokenize(const string & input);
-    bool isInt(const string & word);
-    bool isFloat(const string & word);
 }
 
 

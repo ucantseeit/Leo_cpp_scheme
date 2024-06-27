@@ -42,47 +42,7 @@ namespace tokens {
         return tokens;
     }
 
-    bool isInt(const string & word) {
-        std::size_t pos;
 
-        try {
-            long long i = std::stoll(word, &pos);
-            if (pos == word.length()) {
-                return true;
-            }
-        } 
-        // when the first char is not a number/+/-
-        catch (std::invalid_argument const & ex) {
-            return false;
-        }
-        catch (std::overflow_error const & ex) {
-            std::cerr << ex.what() << " the input is too large." << std::endl;
-            return false;
-        }
-        
-        return false;   
-    }
-
-    bool isFloat(const string & word) {
-        std::size_t pos;
-
-        try {
-            double i = std::stod(word, &pos);
-            if (pos == word.length()) {
-                return true;
-            }
-        } 
-        // when the first char is not a number/+/-
-        catch (std::invalid_argument const & ex) {
-            return false;
-        }
-        catch (std::out_of_range const & ex) {
-            std::cerr << ex.what() << " the input is too large." << std::endl;
-            return false;
-        }
-        
-        return false;   
-    }
 }
 
 
@@ -112,22 +72,4 @@ namespace tokens {
 //     std::cout << '\n';
 
 //     return 0;
-// }
-
-// if (isInt(word)) {
-//     tokens.emplace_back(std::stoll(word));
-// } else if (isFloat(word)) {
-//     tokens.emplace_back(std::stod(word));
-// } else {
-//     tokens.emplace_back(word);
-// }
-
-// void display_token(const token& t) {
-//     if (holds_alternative<Int>(t)) {
-//         std::cout << get<Int>(t);
-//     } else if (holds_alternative<Float>(t)) {
-//         std::cout << get<Float>(t);
-//     } else {
-//         std::cout << get<Symbol>(t);
-//     }
 // }
