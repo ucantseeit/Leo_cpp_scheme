@@ -13,20 +13,31 @@ namespace SyntaxTree_ {
 
     typedef variant<Int, Float, Symbol> valueType;
     typedef std::vector<token>::iterator tokenptr;
-    struct Nil {};
-    
+
 
     class SyntaxTree{
     public:
         valueType value;
         list<SyntaxTree> items;
+        dataType type;
 
     public:
         SyntaxTree() = default;
-        SyntaxTree(const valueType & t) : value(t) {}
-        SyntaxTree(const list<SyntaxTree> & tl) : items(tl) {}
+        SyntaxTree(const valueType & v, dataType t) : value(v), type(t) {}
+        SyntaxTree(const list<SyntaxTree> & vl) : items(vl) {
+            type = vl.empty() ? NIL : SUBEXPR ;
+        }
 
-        bool isLeaf() const {return items.empty();}
+
+        bool isLeaf() const {return type != SUBEXPR;}
+        bool isNil() const {return type == NIL;}
+        bool isInt() const {return type == INT;}
+        bool isFloat() const {return type == FLOAT;}
+        bool isSymbol() const {return type == SYMBOL;}
+        bool isSubexpr() const {return type == SUBEXPR;}
+        
+
+
         void display() const;
     };
 }
