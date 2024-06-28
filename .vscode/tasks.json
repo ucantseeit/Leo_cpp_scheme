@@ -8,6 +8,8 @@
 			"args": [
 				"-fdiagnostics-color=always",
 				"-g",
+				"test1.cpp",
+				"eval.cpp",
 				"parse.cpp",
 				"SyntaxTree.cpp",
 				"tokenize.cpp",

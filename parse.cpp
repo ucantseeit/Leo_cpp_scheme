@@ -12,16 +12,20 @@ namespace parser {
             return subItems;
         } else {
             valueType item;
+            dataType t;
             if (isInt(*track)) {
                 item = std::stoll(*track);
+                t = INT;
             } else if (isFloat(*track)) {
                 item = std::stod(*track);
+                t = FLOAT;
             } else {
                 item = *track;
+                t = SYMBOL;
             }
 
             track++;
-            return item;
+            return SyntaxTree(item, t);
         }
     }
 
@@ -68,14 +72,14 @@ namespace parser {
     }
 }
 
-int main() {
-    using namespace parser;
-    using namespace tokens;
-    string str = "((1 1.1.1) 2.5 3e1)";
-    vector<token> ts = tokenize(str);
-    auto pts = ts.begin();
-    SyntaxTree st = parse(pts);
+// int main() {
+//     using namespace parser;
+//     using namespace tokens;
+//     string str = "((1 1.1.1) 2.5 3e1)";
+//     vector<token> ts = tokenize(str);
+//     auto pts = ts.begin();
+//     SyntaxTree st = parse(pts);
 
-    st.display();
-    cout << endl;
-}
+//     st.display();
+//     cout << endl;
+// }
