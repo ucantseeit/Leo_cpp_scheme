@@ -5,56 +5,65 @@
 
 using namespace SyntaxTree_;
 
-double eval_expr(const SyntaxTree expr) {
+SyntaxTree eval_expr(const SyntaxTree & expr, const Frame & env) {
     using std::cout, std::endl, std::vector;
     if (expr.isLeaf()) {
-        if (expr.isFloat()) {
-            return get<Float>(expr.value);
-        } else if (expr.isInt()) {
-            return get<Int>(expr.value);
+        // if (expr.isFloat()) {
+        //     return get<Float>(expr.value);
+        // } else if (expr.isInt()) {
+        //     return get<Int>(expr.value);
+        // } else if (expr.isProc()) {
+        //     return 0
+        // } else if (expr.isSymbol()){
+        //     SyntaxTree result = env.lookup(get<string>(expr.value));
+        //     return eval_expr(result, env);
+        // } else {
+        //     cout << "something strange in eval" << endl;
+        //     return -1;
+        // }
+        if (expr.isSymbol()) {
+            SyntaxTree result = env.lookup(get<string>(expr.value));
+            return eval_expr(result, env);
         } else {
-            // TODO
-            return -1;
+            return expr;
         }
-        
     }
     
-    string op = std::get<string>(expr.items.front().value);
+    Symbol sym = get<Symbol>(expr.items.front().value);
+    const Proc op = get<Proc>(env.lookup(sym).value);
 
-    vector<double> arguments;
+    list<SyntaxTree> arguments;
     auto track = std::next(expr.items.begin());
     for (; track != expr.items.end();
         track = next(track)) {
-        if (track->isInt()) {
-            arguments.emplace_back(std::get<Int>(track->value));
-        } else if (track->isFloat()) {
-            arguments.emplace_back(std::get<Float>(track->value));
-        } else if (track->isSubexpr() == SUBEXPR) {
-            arguments.push_back(eval_expr(track->items));
+        if (track->isSubexpr() == SUBEXPR) {
+            arguments.emplace_back(eval_expr(track->items, Frame(&env)));
         } else {
-            cout << "Type Error" << endl;
+            arguments.emplace_back(*track);
         }       
     }
 
-    std::unordered_set<string> buitin_operators = {"+", "-", "*", "/"};
+    return op(arguments);
 
-    if (op == "+") {
-        double result = std::accumulate(arguments.begin(), arguments.end(), 
-                                        0.0, std::plus<double>());
-        return result;
-    } else if (op == "-") {
-        return std::accumulate(arguments.begin()+1, arguments.end(), 
-                            arguments[0], std::minus<double>());
-    } else if (op == "*") {
-        return std::accumulate(arguments.begin(), arguments.end(), 
-                            1.0, std::multiplies<double>());
-    } else if (op == "/") {
-        return std::accumulate(arguments.begin()+1, arguments.end(), 
-                            arguments[0], std::divides<double>());
-    } else {
-        cout << "Invalid Operator1" << endl;
-        return -1;
-    }
+    // std::unordered_set<string> buitin_operators = {"+", "-", "*", "/"};
+
+    // if (op == "+") {
+    //     double result = std::accumulate(arguments.begin(), arguments.end(), 
+    //                                     0.0, std::plus<double>());
+    //     return result;
+    // } else if (op == "-") {
+    //     return std::accumulate(arguments.begin()+1, arguments.end(), 
+    //                         arguments[0], std::minus<double>());
+    // } else if (op == "*") {
+    //     return std::accumulate(arguments.begin(), arguments.end(), 
+    //                         1.0, std::multiplies<double>());
+    // } else if (op == "/") {
+    //     return std::accumulate(arguments.begin()+1, arguments.end(), 
+    //                         arguments[0], std::divides<double>());
+    // } else {
+    //     cout << "Invalid Operator1" << endl;
+    //     return -1;
+    // }
 }
 
 

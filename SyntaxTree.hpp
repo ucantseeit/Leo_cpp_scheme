@@ -11,11 +11,14 @@ namespace SyntaxTree_ {
     using std::cout, std::endl;
     using tokens::token;
 
-    typedef variant<Int, Float, Symbol> valueType;
     typedef std::vector<token>::iterator tokenptr;
 
 
     class SyntaxTree{
+    public:
+        typedef SyntaxTree (*Proc) (const list<SyntaxTree> &);
+        typedef variant<Int, Float, Proc, Symbol> valueType;
+
     public:
         valueType value;
         list<SyntaxTree> items;
@@ -33,6 +36,7 @@ namespace SyntaxTree_ {
         bool isNil() const {return type == NIL;}
         bool isInt() const {return type == INT;}
         bool isFloat() const {return type == FLOAT;}
+        bool isProc() const {return type == PROC;}
         bool isSymbol() const {return type == SYMBOL;}
         bool isSubexpr() const {return type == SUBEXPR;}
         
@@ -40,6 +44,9 @@ namespace SyntaxTree_ {
 
         void display() const;
     };
+
+    typedef SyntaxTree (*Proc) (const list<SyntaxTree> &);
+    typedef variant<Int, Float, Proc, Symbol> valueType;
 }
 
 

@@ -3,7 +3,8 @@
 
 #include "SyntaxTree.hpp"
 #include "types.hpp"
+#include "env.hpp"
 
-double eval_expr(const SyntaxTree_::SyntaxTree expr);
+SyntaxTree eval_expr(const SyntaxTree_::SyntaxTree & expr, const Frame &);
 
 #endif

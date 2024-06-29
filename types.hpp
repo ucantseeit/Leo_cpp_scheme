@@ -7,6 +7,6 @@ typedef long long Int;
 typedef double Float;
 typedef std::string Symbol;
 
-typedef enum {NIL, INT, FLOAT, SYMBOL, SUBEXPR} dataType;
+typedef enum {NIL, INT, FLOAT, PROC, SYMBOL, SUBEXPR} dataType;
 
 #endif

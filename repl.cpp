@@ -3,6 +3,7 @@
 #include "tokenize.hpp"
 #include "parse.hpp"
 #include "eval.hpp"
+#include "env.hpp"
 
 int main(int, char**){
     using std::cin, std::cout, std::endl;
@@ -19,6 +20,15 @@ int main(int, char**){
         auto pts = ts.begin();
         SyntaxTree st = parse(pts);
 
-        cout << eval_expr(st) << endl;
+        SyntaxTree result = eval_expr(st, global_env);
+
+        if (result.isFloat()) {
+            cout << get<Float>(result.value) << endl;
+        } else if (result.isInt()) {
+            cout << get<Int>(result.value) << endl;
+        } else if (result.isProc()) {
+            cout << "it's a procedure" << endl;
+        }
+
     } while (input != "exit()");
 }

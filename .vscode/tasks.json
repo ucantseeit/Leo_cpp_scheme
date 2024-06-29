@@ -13,6 +13,8 @@
 				"parse.cpp",
 				"SyntaxTree.cpp",
 				"tokenize.cpp",
+				"env.cpp",
+				"built_in.cpp",
 				"-o",
 				"${fileDirname}/a.out",
 				"-std=c++17"
