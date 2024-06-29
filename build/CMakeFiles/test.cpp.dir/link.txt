@@ -1,1 +1,0 @@
-/usr/bin/g++ -g -rdynamic CMakeFiles/test.cpp.dir/Pair.cpp.o CMakeFiles/test.cpp.dir/scheme.cpp.o -o test.cpp 

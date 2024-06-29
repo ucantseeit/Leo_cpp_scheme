@@ -16,4 +16,11 @@ int main() {
     SyntaxTree st = parse(pts);
 
     cout << eval_expr(st) << endl;
+
+    string str1 = "(+ 1 2)";
+    ts = tokenize(str1);
+    pts = ts.begin();
+    st = parse(pts);
+    cout << eval_expr(st) << endl;
+
 }

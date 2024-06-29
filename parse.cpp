@@ -33,7 +33,7 @@ namespace parser {
         std::size_t pos;
 
         try {
-            long long i = std::stoll(word, &pos);
+            std::stoll(word, &pos);
             if (pos == word.length()) {
                 return true;
             }
@@ -54,7 +54,7 @@ namespace parser {
         std::size_t pos;
 
         try {
-            double i = std::stod(word, &pos);
+            std::stod(word, &pos);
             if (pos == word.length()) {
                 return true;
             }

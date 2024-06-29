@@ -1,4 +1,5 @@
 #include <iostream>
+#include <string>
 #include "tokenize.hpp"
 #include "parse.hpp"
 #include "eval.hpp"
@@ -11,7 +12,7 @@ int main(int, char**){
     std::string input;
     do {
         cout << ">> ";
-        cin >> input;
+        std::getline(cin, input);
 
         vector<token> ts = tokenize(input);
 

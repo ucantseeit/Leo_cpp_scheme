@@ -1,1 +1,0 @@
-/usr/bin/g++ -g -g -rdynamic CMakeFiles/test.o.dir/test.cpp.o CMakeFiles/test.o.dir/Pair.cpp.o CMakeFiles/test.o.dir/scheme.cpp.o CMakeFiles/test.o.dir/tokenizer.cpp.o CMakeFiles/test.o.dir/parser.cpp.o -o test.o 
