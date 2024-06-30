@@ -5,6 +5,9 @@
 
 
 SyntaxTree_::SyntaxTree add(const std::list<SyntaxTree_::SyntaxTree> & arguments);
+SyntaxTree_::SyntaxTree minus(const std::list<SyntaxTree_::SyntaxTree> & arguments);
+SyntaxTree_::SyntaxTree multiple(const std::list<SyntaxTree_::SyntaxTree> & arguments);
+SyntaxTree_::SyntaxTree divide(const std::list<SyntaxTree_::SyntaxTree> & arguments);
 
 
 #endif

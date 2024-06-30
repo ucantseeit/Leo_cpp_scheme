@@ -36,7 +36,7 @@ SyntaxTree eval_expr(const SyntaxTree & expr, const Frame & env) {
     auto track = std::next(expr.items.begin());
     for (; track != expr.items.end();
         track = next(track)) {
-        if (track->isSubexpr() == SUBEXPR) {
+        if (track->isSubexpr()) {
             arguments.emplace_back(eval_expr(track->items, Frame(&env)));
         } else {
             arguments.emplace_back(*track);

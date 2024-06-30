@@ -6,12 +6,22 @@ void Frame::insert(const string & symbol, const SyntaxTree & content) {
 }
 
 SyntaxTree Frame::lookup(const string & symbol) const {
-    return symbolTable.at(symbol);
+    if (symbolTable.find(symbol) != symbolTable.end()) {
+        return symbolTable.at(symbol);
+    } else if (symbolTable.find(symbol) == symbolTable.end() && parentFrame != nullptr) {
+        return parentFrame->lookup(symbol);
+    } else {
+        std::cout << "the variable " << symbol << " is not defined" << std::endl;
+        return SyntaxTree(-1, INT);
+    }
 }
 
 Frame setGlobalFrame() {
     Frame gFrame;
     gFrame.insert("+", SyntaxTree(&add, PROC));
+    gFrame.insert("-", SyntaxTree(&minus, PROC));
+    gFrame.insert("*", SyntaxTree(&multiple, PROC));
+    gFrame.insert("/", SyntaxTree(&divide, PROC));
 
 
     return gFrame;
