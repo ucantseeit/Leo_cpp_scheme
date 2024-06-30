@@ -16,13 +16,21 @@ namespace SyntaxTree_ {
 
     class SyntaxTree{
     public:
+        struct Lambda {
+            list<Symbol> params;
+            list<SyntaxTree> content;
+
+            Lambda(const list<Symbol> & params_, const list<SyntaxTree> & content_) :
+                params(params_), content(content_) {}
+            Lambda(const Lambda & rhs) : params(rhs.params), content(rhs.content) {};
+        };
         typedef SyntaxTree (*Proc) (const list<SyntaxTree> &);
-        typedef variant<Int, Float, Proc, Symbol> valueType;
+        typedef variant<Int, Float, Proc, Lambda, Symbol> valueType;
 
     public:
         valueType value;
         list<SyntaxTree> items;
-        dataType type;
+        dataType type = NIL;
 
     public:
         SyntaxTree() = default;
@@ -37,6 +45,7 @@ namespace SyntaxTree_ {
         bool isInt() const {return type == INT;}
         bool isFloat() const {return type == FLOAT;}
         bool isProc() const {return type == PROC;}
+        bool isLambda() const {return type == LAMBDA;}
         bool isSymbol() const {return type == SYMBOL;}
         bool isSubexpr() const {return type == SUBEXPR;}
         
@@ -46,7 +55,9 @@ namespace SyntaxTree_ {
     };
 
     typedef SyntaxTree (*Proc) (const list<SyntaxTree> &);
-    typedef variant<Int, Float, Proc, Symbol> valueType;
+    typedef SyntaxTree::Lambda Lambda;
+    typedef variant<Int, Float, Proc, Lambda, Symbol> valueType;
+    extern SyntaxTree nil;
 }
 
 

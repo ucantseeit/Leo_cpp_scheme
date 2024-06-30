@@ -2,25 +2,14 @@
 #include <unordered_map>
 #include <numeric>
 #include "eval.hpp"
+#include "special_forms.hpp"
 
 using namespace SyntaxTree_;
 
-SyntaxTree eval_expr(const SyntaxTree & expr, const Frame & env) {
+SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
     using std::cout, std::endl, std::vector;
+
     if (expr.isLeaf()) {
-        // if (expr.isFloat()) {
-        //     return get<Float>(expr.value);
-        // } else if (expr.isInt()) {
-        //     return get<Int>(expr.value);
-        // } else if (expr.isProc()) {
-        //     return 0
-        // } else if (expr.isSymbol()){
-        //     SyntaxTree result = env.lookup(get<string>(expr.value));
-        //     return eval_expr(result, env);
-        // } else {
-        //     cout << "something strange in eval" << endl;
-        //     return -1;
-        // }
         if (expr.isSymbol()) {
             SyntaxTree result = env.lookup(get<string>(expr.value));
             return eval_expr(result, env);
@@ -29,41 +18,63 @@ SyntaxTree eval_expr(const SyntaxTree & expr, const Frame & env) {
         }
     }
     
+    // TODO: the expr may also begins with subexpr / exception
     Symbol sym = get<Symbol>(expr.items.front().value);
-    const Proc op = get<Proc>(env.lookup(sym).value);
 
-    list<SyntaxTree> arguments;
-    auto track = std::next(expr.items.begin());
-    for (; track != expr.items.end();
-        track = next(track)) {
-        if (track->isSubexpr()) {
-            arguments.emplace_back(eval_expr(track->items, Frame(&env)));
-        } else {
-            arguments.emplace_back(*track);
-        }       
+    // handle special forms
+    if (specialForms.find(sym) != specialForms.end()) {
+        return handleSpecialForms(expr.items, env);
     }
 
-    return op(arguments);
+    // handle the built-in procedures
+    if (env.lookup(sym).isProc()) {
+        const Proc op = get<Proc>(env.lookup(sym).value);
+        list<SyntaxTree> arguments;
+        auto track = std::next(expr.items.begin());
+        for (; track != expr.items.end();
+            track = next(track)) {
+            if (track->isSubexpr() || track->isSymbol()) {
+                arguments.emplace_back(eval_expr(*track, env));
+            } else {
+                arguments.emplace_back(*track);
+            }       
+        }
 
-    // std::unordered_set<string> buitin_operators = {"+", "-", "*", "/"};
+        return op(arguments);
+    } 
+    
+    // handle the user-defined functions
+    if (env.lookup(sym).isLambda()) {
+        // create a new frame to evaluate the call
+        Lambda lamb = get<Lambda>(env.lookup(sym).value);
+        Frame newFrame(env);
 
-    // if (op == "+") {
-    //     double result = std::accumulate(arguments.begin(), arguments.end(), 
-    //                                     0.0, std::plus<double>());
-    //     return result;
-    // } else if (op == "-") {
-    //     return std::accumulate(arguments.begin()+1, arguments.end(), 
-    //                         arguments[0], std::minus<double>());
-    // } else if (op == "*") {
-    //     return std::accumulate(arguments.begin(), arguments.end(), 
-    //                         1.0, std::multiplies<double>());
-    // } else if (op == "/") {
-    //     return std::accumulate(arguments.begin()+1, arguments.end(), 
-    //                         arguments[0], std::divides<double>());
-    // } else {
-    //     cout << "Invalid Operator1" << endl;
-    //     return -1;
-    // }
+        // get the arguments of the call
+        list<SyntaxTree> arguments;
+        auto track = std::next(expr.items.begin());
+        for (; track != expr.items.end();
+            track = next(track)) {
+            if (track->isSubexpr() || track->isSymbol()) {
+                arguments.emplace_back(eval_expr(*track, env));
+            } else {
+                arguments.emplace_back(*track);
+            }       
+        }
+
+        if (lamb.params.size() != arguments.size()) {
+            cout << "Too many/few arguments for the call to " << sym << endl;
+        }
+
+        // bind the arguments to the formal parameters
+        auto parg = arguments.begin();
+        for (auto & para : lamb.params) {
+            newFrame.insert(para, *parg);
+            parg = next(parg);
+        }
+
+        return eval_expr(lamb.content, newFrame);
+    }
+    
 }
 
 

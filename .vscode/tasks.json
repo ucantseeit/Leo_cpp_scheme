@@ -15,6 +15,7 @@
 				"tokenize.cpp",
 				"env.cpp",
 				"built_in.cpp",
+				"special_forms.cpp",
 				"-o",
 				"${fileDirname}/a.out",
 				"-std=c++17"

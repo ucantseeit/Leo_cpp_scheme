@@ -2,6 +2,10 @@
 #include "built_in.hpp"
 
 void Frame::insert(const string & symbol, const SyntaxTree & content) {
+    if (symbolTable.find(symbol) != symbolTable.end()) {
+        std::cout << symbol << " has been defined." << std::endl;
+        return;
+    }
     symbolTable[symbol] = content;
 }
 

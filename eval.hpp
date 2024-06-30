@@ -5,6 +5,6 @@
 #include "types.hpp"
 #include "env.hpp"
 
-SyntaxTree eval_expr(const SyntaxTree_::SyntaxTree & expr, const Frame &);
+SyntaxTree eval_expr(const SyntaxTree_::SyntaxTree & expr, Frame &);
 
 #endif

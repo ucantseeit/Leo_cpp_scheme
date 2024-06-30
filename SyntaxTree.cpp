@@ -23,6 +23,8 @@ namespace SyntaxTree_ {
             cout << ')';
         }
     }
+
+    SyntaxTree nil = SyntaxTree();
 }
 
 
