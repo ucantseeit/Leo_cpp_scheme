@@ -6,7 +6,6 @@
 #include <string>
 #include <unordered_set>
 #include <variant>
-#include "types.hpp"
 
 namespace tokens {
     using std::string, std::vector, std::variant, std::holds_alternative, std::get;

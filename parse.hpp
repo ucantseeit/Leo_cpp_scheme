@@ -4,7 +4,6 @@
 
 #include <iterator>
 #include "tokenize.hpp"
-#include "types.hpp"
 #include "SyntaxTree.hpp"
 
 

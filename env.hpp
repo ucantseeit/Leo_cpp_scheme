@@ -3,9 +3,9 @@
 
 #include <unordered_map>
 #include "SyntaxTree.hpp"
-#include "types.hpp"
 
-using std::unordered_map, SyntaxTree_::SyntaxTree, std::string;
+using std::unordered_map, std::string;
+using SyntaxTree_::SyntaxTree;
 
 class Frame {
 private:

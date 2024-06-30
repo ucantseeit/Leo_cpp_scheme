@@ -4,12 +4,20 @@
 #include <list>
 
 #include "tokenize.hpp"
-#include "types.hpp"
+
+typedef long long Int;
+typedef double Float;
+typedef std::string Symbol;
+
+
+typedef enum {NIL, INT, FLOAT, PROC, LAMBDA, SYMBOL, SUBEXPR} dataType;
 
 namespace SyntaxTree_ {
     using std::string, std::vector, std::variant, std::holds_alternative, std::get, std::list;
     using std::cout, std::endl;
     using tokens::token;
+
+
 
     typedef std::vector<token>::iterator tokenptr;
 
