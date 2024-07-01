@@ -47,7 +47,8 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
     if (env.lookup(sym).isLambda()) {
         // create a new frame to evaluate the call
         Lambda lamb = get<Lambda>(env.lookup(sym).value);
-        Frame newFrame(&env);
+        Frame newFrame(lamb.pLocalFrame);
+
         // get the arguments of the call
         list<SyntaxTree> arguments;
         auto track = std::next(expr.items.begin());

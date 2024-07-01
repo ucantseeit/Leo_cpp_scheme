@@ -9,6 +9,8 @@ typedef long long Int;
 typedef double Float;
 typedef std::string Symbol;
 
+class Frame;
+
 
 typedef enum {NIL, INT, FLOAT, PROC, LAMBDA, SYMBOL, SUBEXPR} dataType;
 
@@ -27,10 +29,12 @@ namespace SyntaxTree_ {
         struct Lambda {
             list<Symbol> params;
             list<SyntaxTree> content;
+            Frame * pLocalFrame;
 
-            Lambda(const list<Symbol> & params_, const list<SyntaxTree> & content_) :
-                params(params_), content(content_) {}
-            Lambda(const Lambda & rhs) : params(rhs.params), content(rhs.content) {};
+            Lambda(const list<Symbol> & params_, const list<SyntaxTree> & content_, Frame * pl) :
+                params(params_), content(content_), pLocalFrame(pl) {}
+            Lambda(const Lambda & rhs) : 
+                params(rhs.params), content(rhs.content), pLocalFrame(rhs.pLocalFrame) {};
         };
         typedef SyntaxTree (*Proc) (const list<SyntaxTree> &);
         typedef variant<Int, Float, Proc, Lambda, Symbol> valueType;

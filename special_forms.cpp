@@ -37,7 +37,7 @@ SyntaxTree handleDefine(const list<SyntaxTree>& items,
             params.emplace_back(get<Symbol>(p->value));
         }
         list<SyntaxTree> content = next(pitem)->items;
-        SyntaxTree_::Lambda lamb(params, content);
+        SyntaxTree_::Lambda lamb(params, content, &env);
 
         SyntaxTree value(lamb, LAMBDA);
         env.insert(sym, value);
