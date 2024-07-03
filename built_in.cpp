@@ -92,3 +92,36 @@ SyntaxTree divide(const list<SyntaxTree> & arguments) {
 
     return SyntaxTree((Float)result, FLOAT);
 }
+
+
+SyntaxTree equalNum(const list<SyntaxTree> & arguments) {
+    auto arg0 = arguments.front();
+    auto arg1 = *(++arguments.begin());
+    if (arg0.isInt() && arg1.isInt()) {
+        return SyntaxTree(get<Int>(arg0.value) == get<Int>(arg1.value), BOOL);
+    } else if (arg0.isInt() && arg1.isFloat()) {
+        return SyntaxTree(get<Int>(arg0.value) == get<Float>(arg1.value), BOOL);
+    } else if (arg0.isFloat() && arg1.isInt()) {
+        return SyntaxTree(get<Float>(arg0.value) == get<Int>(arg1.value), BOOL);
+    } else if (arg0.isFloat() && arg1.isFloat()) {
+        return SyntaxTree(get<Float>(arg0.value) == get<Float>(arg1.value), BOOL);
+    }
+}
+
+SyntaxTree_::SyntaxTree notEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
+    return nil;
+}
+SyntaxTree_::SyntaxTree greaterThan(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
+    return nil;
+}
+SyntaxTree_::SyntaxTree lessThan(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
+    return nil;
+}
+SyntaxTree_::SyntaxTree greaterEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
+    return nil;
+}
+SyntaxTree_::SyntaxTree lessEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
+    return nil;
+}
+
+

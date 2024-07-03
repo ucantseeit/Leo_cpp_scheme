@@ -7,12 +7,13 @@
 
 typedef long long Int;
 typedef double Float;
+typedef bool Bool;
 typedef std::string Symbol;
 
 class Frame;
 
 
-typedef enum {NIL, INT, FLOAT, PROC, LAMBDA, SYMBOL, SUBEXPR} dataType;
+typedef enum {NIL, INT, FLOAT, BOOL, PROC, LAMBDA, SYMBOL, SUBEXPR} dataType;
 
 namespace SyntaxTree_ {
     using std::string, std::vector, std::variant, std::holds_alternative, std::get, std::list;
@@ -37,7 +38,7 @@ namespace SyntaxTree_ {
                 params(rhs.params), content(rhs.content), pLocalFrame(rhs.pLocalFrame) {};
         };
         typedef SyntaxTree (*Proc) (const list<SyntaxTree> &);
-        typedef variant<Int, Float, Proc, Lambda, Symbol> valueType;
+        typedef variant<Int, Float, Bool, Proc, Lambda, Symbol> valueType;
 
     public:
         valueType value;
@@ -56,6 +57,7 @@ namespace SyntaxTree_ {
         bool isNil() const {return type == NIL;}
         bool isInt() const {return type == INT;}
         bool isFloat() const {return type == FLOAT;}
+        bool isBool() const {return type == BOOL;}
         bool isProc() const {return type == PROC;}
         bool isLambda() const {return type == LAMBDA;}
         bool isSymbol() const {return type == SYMBOL;}
@@ -66,9 +68,9 @@ namespace SyntaxTree_ {
         void display() const;
     };
 
-    typedef SyntaxTree (*Proc) (const list<SyntaxTree> &);
+    typedef SyntaxTree::Proc Proc;
     typedef SyntaxTree::Lambda Lambda;
-    typedef variant<Int, Float, Proc, Lambda, Symbol> valueType;
+    typedef SyntaxTree::valueType valueType;
     extern SyntaxTree nil;
 }
 

@@ -26,6 +26,16 @@ Frame setGlobalFrame() {
     gFrame.insert("-", SyntaxTree(&minus, PROC));
     gFrame.insert("*", SyntaxTree(&multiple, PROC));
     gFrame.insert("/", SyntaxTree(&divide, PROC));
+    
+    gFrame.insert("=", SyntaxTree(&equalNum, PROC));
+    gFrame.insert("!=", SyntaxTree(&notEqual, PROC));
+    gFrame.insert(">", SyntaxTree(&greaterThan, PROC));
+    gFrame.insert("<", SyntaxTree(&lessThan, PROC));
+    gFrame.insert(">=", SyntaxTree(&greaterEqual, PROC));
+    gFrame.insert("<=", SyntaxTree(&lessEqual, PROC));
+
+    gFrame.insert("#t", SyntaxTree(true, BOOL));
+    gFrame.insert("#f", SyntaxTree(false, BOOL));
 
 
     return gFrame;

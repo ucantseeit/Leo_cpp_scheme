@@ -2,9 +2,11 @@
 
 using std::next, std::get, std::list, SyntaxTree_::Proc;
 
-std::unordered_set<Symbol> specialForms = {"define"};
+std::unordered_set<Symbol> specialForms = {"define", "if"};
 
 SyntaxTree handleDefine(const list<SyntaxTree>& items,
+                        Frame& env);
+SyntaxTree handleIf(const list<SyntaxTree>& items,
                         Frame& env);
 
 SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
@@ -13,6 +15,11 @@ SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
     
     if (sym == "define") {
         return handleDefine(items, env);
+    } else if (sym == "if") {
+        return handleIf(items, env);
+    } else {
+        std::cerr << "sth wrong beforehand" << std::endl;
+        return SyntaxTree_::nil;
     }
 }
 
@@ -44,4 +51,19 @@ SyntaxTree handleDefine(const list<SyntaxTree>& items,
     }
 
     return SyntaxTree_::nil;
+}
+
+SyntaxTree handleIf(const list <SyntaxTree> & items,
+                    Frame & env) {
+    auto pitem = next(items.begin());
+
+    SyntaxTree predicate = eval_expr(*pitem, env);
+    SyntaxTree expr0 = *(++pitem);
+    SyntaxTree expr1 = *(++pitem);
+
+    if (!predicate.isBool() || get<Bool>(predicate.value) == true) {
+        return eval_expr(expr0, env);
+    } else {
+        return eval_expr(expr1, env);
+    }
 }
