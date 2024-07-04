@@ -74,7 +74,9 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
 
         return eval_expr(lamb.content, newFrame);
     }
-    
+
+    cout << "sth wrong in eval" << endl;
+    return nil;
 }
 
 

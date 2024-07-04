@@ -27,7 +27,15 @@ int main(int, char**){
         } else if (result.isInt()) {
             cout << get<Int>(result.value) << endl;
         } else if (result.isProc()) {
-            cout << "it's a procedure" << endl;
+            cout << "it's a buit-in procedure" << endl;
+        } else if (result.isLambda()) {
+            cout << "it's a user-defined procedure" << endl;
+        } else if (result.isBool()) {
+            if (get<Bool>(result.value) == true) {
+                cout << "#t" << endl;
+            } else {
+                cout << "#f" << endl;
+            }
         }
 
     } while (input != "exit()");

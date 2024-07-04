@@ -1,5 +1,6 @@
 #include "built_in.hpp"
 #include <iterator>
+#include <functional>
 
 using namespace SyntaxTree_;
 
@@ -93,35 +94,58 @@ SyntaxTree divide(const list<SyntaxTree> & arguments) {
     return SyntaxTree((Float)result, FLOAT);
 }
 
-
-SyntaxTree equalNum(const list<SyntaxTree> & arguments) {
+template <typename Comparator>
+bool helpCmp(const list<SyntaxTree> & arguments, Comparator cmp) {
     auto arg0 = arguments.front();
     auto arg1 = *(++arguments.begin());
     if (arg0.isInt() && arg1.isInt()) {
-        return SyntaxTree(get<Int>(arg0.value) == get<Int>(arg1.value), BOOL);
+        return cmp(get<Int>(arg0.value), get<Int>(arg1.value));
     } else if (arg0.isInt() && arg1.isFloat()) {
-        return SyntaxTree(get<Int>(arg0.value) == get<Float>(arg1.value), BOOL);
+        return cmp(get<Int>(arg0.value), get<Float>(arg1.value));
     } else if (arg0.isFloat() && arg1.isInt()) {
-        return SyntaxTree(get<Float>(arg0.value) == get<Int>(arg1.value), BOOL);
+        return cmp(get<Float>(arg0.value), get<Int>(arg1.value));
     } else if (arg0.isFloat() && arg1.isFloat()) {
-        return SyntaxTree(get<Float>(arg0.value) == get<Float>(arg1.value), BOOL);
+        return cmp(get<Float>(arg0.value), get<Float>(arg1.value));
     }
+
+    cout << "sth wrong in cmp" << endl;
+    return false;
+}
+
+
+SyntaxTree equalNum(const list<SyntaxTree> & arguments) {
+    std::equal_to<long double> eq;
+    return SyntaxTree(helpCmp(arguments, eq), BOOL);
 }
 
 SyntaxTree_::SyntaxTree notEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
-    return nil;
+    std::equal_to<long double> eq;
+    return SyntaxTree(!helpCmp(arguments, eq), BOOL);
 }
+
 SyntaxTree_::SyntaxTree greaterThan(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
-    return nil;
+    std::greater<long double> gt;
+    return SyntaxTree(helpCmp(arguments, gt), BOOL);
 }
+
 SyntaxTree_::SyntaxTree lessThan(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
-    return nil;
+    std::less<long double> ls;
+    return SyntaxTree(helpCmp(arguments, ls), BOOL);
 }
+
 SyntaxTree_::SyntaxTree greaterEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
-    return nil;
+    std::greater_equal<long double> ge;
+    return SyntaxTree(helpCmp(arguments, ge), BOOL);
 }
+
 SyntaxTree_::SyntaxTree lessEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
-    return nil;
+    std::less_equal<long double> le;
+    return SyntaxTree(helpCmp(arguments, le), BOOL);
 }
+
+
+
+
+
 
 

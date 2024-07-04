@@ -2,12 +2,16 @@
 
 using std::next, std::get, std::list, SyntaxTree_::Proc;
 
-std::unordered_set<Symbol> specialForms = {"define", "if"};
+std::unordered_set<Symbol> specialForms = {"define", "if", "and", "or", "not"};
 
 SyntaxTree handleDefine(const list<SyntaxTree>& items,
                         Frame& env);
 SyntaxTree handleIf(const list<SyntaxTree>& items,
                         Frame& env);
+
+SyntaxTree handleAnd(const std::list<SyntaxTree> & items, Frame & env);
+SyntaxTree handleOr(const std::list<SyntaxTree> & items, Frame & env);
+SyntaxTree handleNot(const std::list<SyntaxTree> & items, Frame & env);
 
 SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
                               Frame& env) {
@@ -17,15 +21,16 @@ SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
         return handleDefine(items, env);
     } else if (sym == "if") {
         return handleIf(items, env);
+    } else if (sym == "and") {
+        return handleAnd(items, env);
+    } else if (sym == "or") {
+        return handleOr(items, env);
+    } else if (sym == "not") {
+        return handleNot(items, env);
     } else {
         std::cerr << "sth wrong beforehand" << std::endl;
         return SyntaxTree_::nil;
     }
-}
-
-void bind(const list<SyntaxTree> arguments, const list<SyntaxTree>::const_iterator paramsB, 
-          const list<SyntaxTree>::const_iterator paramsE, Frame env) {
-
 }
 
 SyntaxTree handleDefine(const list<SyntaxTree>& items,
@@ -66,4 +71,35 @@ SyntaxTree handleIf(const list <SyntaxTree> & items,
     } else {
         return eval_expr(expr1, env);
     }
+}
+
+SyntaxTree handleAnd(const std::list<SyntaxTree> & items, Frame & env) {
+    for (auto parg = next(items.begin()); parg != items.end(); parg++) {
+        auto res = eval_expr(*parg, env);
+        if (res.isBool() && get<Bool>(res.value) == false) {
+            return SyntaxTree(false, BOOL);
+        }
+    }
+
+    return SyntaxTree(true, BOOL);
+}
+
+SyntaxTree handleOr(const std::list<SyntaxTree> & items, Frame & env) {
+    for (auto parg = next(items.begin()); parg != items.end(); parg++) {
+        auto res = eval_expr(*parg, env);
+        if (!res.isBool() || get<Bool>(res.value) == true) {
+            return SyntaxTree(true, BOOL);
+        }
+    }
+
+    return SyntaxTree(false, BOOL);
+}
+
+SyntaxTree handleNot(const std::list<SyntaxTree> & items, Frame & env) {
+    auto res = eval_expr(*next(items.begin()), env);
+    if (!res.isBool() || get<Bool>(res.value) == true) {
+        return SyntaxTree(false, BOOL);
+    }
+
+    return SyntaxTree(true, BOOL);
 }

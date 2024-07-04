@@ -3,18 +3,19 @@
 
 #include "SyntaxTree.hpp"
 
+using SyntaxTree_::SyntaxTree;
 
-SyntaxTree_::SyntaxTree add(const std::list<SyntaxTree_::SyntaxTree> & arguments);
-SyntaxTree_::SyntaxTree minus(const std::list<SyntaxTree_::SyntaxTree> & arguments);
-SyntaxTree_::SyntaxTree multiple(const std::list<SyntaxTree_::SyntaxTree> & arguments);
-SyntaxTree_::SyntaxTree divide(const std::list<SyntaxTree_::SyntaxTree> & arguments);
+SyntaxTree add(const std::list<SyntaxTree> & arguments);
+SyntaxTree minus(const std::list<SyntaxTree> & arguments);
+SyntaxTree multiple(const std::list<SyntaxTree> & arguments);
+SyntaxTree divide(const std::list<SyntaxTree> & arguments);
 
-SyntaxTree_::SyntaxTree equalNum(const std::list<SyntaxTree_::SyntaxTree> & arguments);
-SyntaxTree_::SyntaxTree notEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments);
-SyntaxTree_::SyntaxTree greaterThan(const std::list<SyntaxTree_::SyntaxTree> & arguments);
-SyntaxTree_::SyntaxTree lessThan(const std::list<SyntaxTree_::SyntaxTree> & arguments);
-SyntaxTree_::SyntaxTree greaterEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments);
-SyntaxTree_::SyntaxTree lessEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments);
+SyntaxTree equalNum(const std::list<SyntaxTree> & arguments);
+SyntaxTree notEqual(const std::list<SyntaxTree> & arguments);
+SyntaxTree greaterThan(const std::list<SyntaxTree> & arguments);
+SyntaxTree lessThan(const std::list<SyntaxTree> & arguments);
+SyntaxTree greaterEqual(const std::list<SyntaxTree> & arguments);
+SyntaxTree lessEqual(const std::list<SyntaxTree> & arguments);
 
 
 #endif
