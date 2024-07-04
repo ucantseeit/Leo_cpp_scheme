@@ -13,7 +13,7 @@ namespace tokens {
     typedef string token;
     extern std::unordered_set<char> delimeter;
 
-    vector<token> tokenize(const string & input);
+    vector<token> tokenize(std::istream & input);
 }
 
 

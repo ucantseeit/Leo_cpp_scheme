@@ -4,24 +4,25 @@
 
 namespace tokens {
 
-    std::unordered_set<char> delimeter = {' ', '\t'};
+    std::unordered_set<char> delimeter = {' ', '\t', '\n'};
 
-    vector<token> tokenize(const string & input) {
+    vector<token> tokenize(std::istream & input) {
         vector<token> tokens;
         string word;
-        for (auto track : input) {
+        char ch;
+        while (input.get(ch) && ch != '\n') {
             // when meeting ( or )
-            if (track == '(' || track == ')') {
+            if (ch == '(' || ch == ')') {
                 if (!word.empty()) {
                     tokens.emplace_back(word);
                     word.clear();
                 }
-                tokens.emplace_back(string(1, track));
+                tokens.emplace_back(string(1, ch));
                 continue;
             }
 
             // when meeting a delimeter
-            if (delimeter.find(track) != delimeter.end()) {
+            if (delimeter.find(ch) != delimeter.end()) {
                 // push back a word when the word is not empty
                 if (!word.empty()) {
                     tokens.emplace_back(word);
@@ -32,7 +33,7 @@ namespace tokens {
             }
 
             // when meeting a normal char
-            word += track;
+            word += ch;
         }
 
         if (!word.empty()) {

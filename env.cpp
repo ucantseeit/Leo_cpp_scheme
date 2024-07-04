@@ -37,6 +37,8 @@ Frame setGlobalFrame() {
     gFrame.insert("#t", SyntaxTree(true, BOOL));
     gFrame.insert("#f", SyntaxTree(false, BOOL));
 
+    gFrame.insert("load", SyntaxTree(&load, PROC));
+
 
     return gFrame;
 }

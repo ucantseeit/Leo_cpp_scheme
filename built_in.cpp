@@ -1,6 +1,8 @@
 #include "built_in.hpp"
 #include <iterator>
 #include <functional>
+#include <iostream>
+#include <fstream>
 
 using namespace SyntaxTree_;
 
@@ -141,6 +143,43 @@ SyntaxTree_::SyntaxTree greaterEqual(const std::list<SyntaxTree_::SyntaxTree> & 
 SyntaxTree_::SyntaxTree lessEqual(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
     std::less_equal<long double> le;
     return SyntaxTree(helpCmp(arguments, le), BOOL);
+}
+
+
+
+SyntaxTree_::SyntaxTree load(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
+    string fileName = get<Symbol>(arguments.front().value);
+    std::ifstream inputFile(fileName);
+    if (inputFile.is_open()) {
+        vector<token> ts = tokens::tokenize(inputFile);
+
+        auto pts = ts.begin();
+        while (pts != ts.end()) {
+            SyntaxTree st = parser::parse(pts);
+
+            SyntaxTree result = eval_expr(st, global_env);
+
+            if (result.isFloat()) {
+                cout << get<Float>(result.value) << endl;
+            } else if (result.isInt()) {
+                cout << get<Int>(result.value) << endl;
+            } else if (result.isProc()) {
+                cout << "it's a buit-in procedure" << endl;
+            } else if (result.isLambda()) {
+                cout << "it's a user-defined procedure" << endl;
+            } else if (result.isBool()) {
+                if (get<Bool>(result.value) == true) {
+                    cout << "#t" << endl;
+                } else {
+                    cout << "#f" << endl;
+                }
+            }
+        }
+    } else {
+        cout << "cannot open the file" << endl;
+    }
+
+    return nil;
 }
 
 
