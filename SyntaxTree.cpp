@@ -27,5 +27,15 @@ namespace SyntaxTree_ {
     SyntaxTree nil = SyntaxTree();
 }
 
+bool isQuote(const Symbol & sym) {
+    return sym[0] == '\'';
+}
+bool isString(const Symbol & sym){
+    return sym[0] == '\"' && *(sym.end()-1) == '\"';
+}
+bool isVariable(const Symbol & sym) {
+    return !isQuote(sym) && !isString(sym);
+}
+
 
 

@@ -10,6 +10,7 @@ typedef double Float;
 typedef bool Bool;
 typedef std::string Symbol;
 
+// declare to avoid mutual including of header files
 class Frame;
 
 
@@ -73,6 +74,10 @@ namespace SyntaxTree_ {
     typedef SyntaxTree::valueType valueType;
     extern SyntaxTree nil;
 }
+
+bool isQuote(const Symbol & sym);
+bool isVariable(const Symbol & sym);
+bool isString(const Symbol & sym);
 
 
 #endif

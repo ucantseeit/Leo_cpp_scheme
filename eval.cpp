@@ -10,8 +10,8 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
     using std::cout, std::endl, std::vector;
 
     if (expr.isLeaf()) {
-        if (expr.isSymbol()) {
-            SyntaxTree result = env.lookup(get<string>(expr.value));
+        if (expr.isSymbol() && isVariable(get<Symbol>(expr.value))) {
+            SyntaxTree result = env.lookup(get<Symbol>(expr.value));
             return eval_expr(result, env);
         } else {
             return expr;

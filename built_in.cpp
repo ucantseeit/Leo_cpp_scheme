@@ -3,6 +3,7 @@
 #include <functional>
 #include <iostream>
 #include <fstream>
+#include <algorithm>
 
 using namespace SyntaxTree_;
 
@@ -149,6 +150,8 @@ SyntaxTree_::SyntaxTree lessEqual(const std::list<SyntaxTree_::SyntaxTree> & arg
 
 SyntaxTree_::SyntaxTree load(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
     string fileName = get<Symbol>(arguments.front().value);
+    fileName = fileName.substr(1, fileName.size()-2);
+    
     std::ifstream inputFile(fileName);
     if (inputFile.is_open()) {
         vector<token> ts = tokens::tokenize(inputFile);

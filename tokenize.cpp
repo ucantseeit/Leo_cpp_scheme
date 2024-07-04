@@ -10,7 +10,13 @@ namespace tokens {
         vector<token> tokens;
         string word;
         char ch;
-        while (input.get(ch) && ch != '\n') {
+        while (input.get(ch)) {
+            if (&input == &std::cin && ch == '\n') {
+                break;
+            } else if (input.eof()) {
+                break;
+            }
+            
             // when meeting ( or )
             if (ch == '(' || ch == ')') {
                 if (!word.empty()) {
