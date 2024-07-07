@@ -5,8 +5,10 @@
 #include "eval.hpp"
 #include "env.hpp"
 
+void displayResult(const SyntaxTree & st);
+
 int main(int, char**){
-    using std::cin, std::cout, std::endl;
+
     using namespace tokens;
     using namespace parser;
 
@@ -22,21 +24,27 @@ int main(int, char**){
 
             SyntaxTree result = eval_expr(st, global_env);
 
-            if (result.isFloat()) {
-                cout << get<Float>(result.value) << endl;
-            } else if (result.isInt()) {
-                cout << get<Int>(result.value) << endl;
-            } else if (result.isProc()) {
-                cout << "it's a buit-in procedure" << endl;
-            } else if (result.isLambda()) {
-                cout << "it's a user-defined procedure" << endl;
-            } else if (result.isBool()) {
-                if (get<Bool>(result.value) == true) {
-                    cout << "#t" << endl;
-                } else {
-                    cout << "#f" << endl;
-                }
-            }
+            displayResult(result);
+        }
+    }
+}
+
+void displayResult(const SyntaxTree & result) {
+    using std::cin, std::cout, std::endl, std::get;
+
+    if (result.isFloat()) {
+        cout << get<Float>(result.value) << endl;
+    } else if (result.isInt()) {
+        cout << get<Int>(result.value) << endl;
+    } else if (result.isProc()) {
+        cout << "it's a buit-in procedure" << endl;
+    } else if (result.isLambda()) {
+        cout << "it's a user-defined procedure" << endl;
+    } else if (result.isBool()) {
+        if (get<Bool>(result.value) == true) {
+            cout << "#t" << endl;
+        } else {
+            cout << "#f" << endl;
         }
     }
 }

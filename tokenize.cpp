@@ -11,6 +11,12 @@ namespace tokens {
         string word;
         char ch;
         while (input.get(ch)) {
+
+            /* 
+                if input from the keyboard and meet \n
+                or input from the file and meet eof
+                exit the loop
+            */
             if (&input == &std::cin && ch == '\n') {
                 break;
             } else if (input.eof()) {

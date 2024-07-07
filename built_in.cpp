@@ -147,6 +147,8 @@ SyntaxTree_::SyntaxTree lessEqual(const std::list<SyntaxTree_::SyntaxTree> & arg
 }
 
 
+// this function is defined in repl.cpp
+void displayResult(const SyntaxTree & result);
 
 SyntaxTree_::SyntaxTree load(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
     string fileName = get<Symbol>(arguments.front().value);
@@ -159,24 +161,8 @@ SyntaxTree_::SyntaxTree load(const std::list<SyntaxTree_::SyntaxTree> & argument
         auto pts = ts.begin();
         while (pts != ts.end()) {
             SyntaxTree st = parser::parse(pts);
-
             SyntaxTree result = eval_expr(st, global_env);
-
-            if (result.isFloat()) {
-                cout << get<Float>(result.value) << endl;
-            } else if (result.isInt()) {
-                cout << get<Int>(result.value) << endl;
-            } else if (result.isProc()) {
-                cout << "it's a buit-in procedure" << endl;
-            } else if (result.isLambda()) {
-                cout << "it's a user-defined procedure" << endl;
-            } else if (result.isBool()) {
-                if (get<Bool>(result.value) == true) {
-                    cout << "#t" << endl;
-                } else {
-                    cout << "#f" << endl;
-                }
-            }
+            displayResult(result);
         }
     } else {
         cout << "cannot open the file" << endl;
