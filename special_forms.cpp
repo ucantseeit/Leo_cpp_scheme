@@ -2,7 +2,7 @@
 
 using std::next, std::get, std::list, SyntaxTree_::Proc;
 
-std::unordered_set<Symbol> specialForms = {"define", "lambda", "if", "and", "or", "not"};
+std::unordered_set<Symbol> specialForms = {"define", "lambda", "if", "cond", "and", "or", "not"};
 
 SyntaxTree handleDefine(const list<SyntaxTree>& items,
                         Frame& env);
@@ -10,6 +10,8 @@ SyntaxTree handleLambda(const list<SyntaxTree>& items,
                         Frame& env);
 
 SyntaxTree handleIf(const list<SyntaxTree>& items,
+                        Frame& env);
+SyntaxTree handleCond(const list<SyntaxTree>& items,
                         Frame& env);
 
 SyntaxTree handleAnd(const std::list<SyntaxTree> & items, Frame & env);
@@ -26,6 +28,8 @@ SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
         return handleLambda(items, env);
     } else if (sym == "if") {
         return handleIf(items, env);
+    } else if (sym == "cond") {
+         return handleCond(items, env);
     } else if (sym == "and") {
         return handleAnd(items, env);
     } else if (sym == "or") {
@@ -97,6 +101,25 @@ SyntaxTree handleIf(const list <SyntaxTree> & items,
     } else {
         return eval_expr(expr1, env);
     }
+}
+
+SyntaxTree handleCond(const list<SyntaxTree> & items,
+                      Frame & env) {
+    for (auto pitem = next(items.begin()); pitem != items.end();pitem = next(pitem)) {
+        SyntaxTree firstItem = pitem->items.front();
+        SyntaxTree secondItem = *next(pitem->items.begin());
+
+        if (firstItem.isSymbol() && get<Symbol>(firstItem.value) == "else") {
+            return eval_expr(secondItem, env);
+        } else {
+            SyntaxTree predicate = eval_expr(firstItem, env);
+            if (!predicate.isBool() || get<Bool>(predicate.value) == true) {
+                return eval_expr(secondItem, env);
+            }
+        }
+    }
+
+    return SyntaxTree_::nil;
 }
 
 SyntaxTree handleAnd(const std::list<SyntaxTree> & items, Frame & env) {
