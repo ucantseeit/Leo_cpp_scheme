@@ -2,10 +2,13 @@
 
 using std::next, std::get, std::list, SyntaxTree_::Proc;
 
-std::unordered_set<Symbol> specialForms = {"define", "if", "and", "or", "not"};
+std::unordered_set<Symbol> specialForms = {"define", "lambda", "if", "and", "or", "not"};
 
 SyntaxTree handleDefine(const list<SyntaxTree>& items,
                         Frame& env);
+SyntaxTree handleLambda(const list<SyntaxTree>& items,
+                        Frame& env);
+
 SyntaxTree handleIf(const list<SyntaxTree>& items,
                         Frame& env);
 
@@ -19,6 +22,8 @@ SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
     
     if (sym == "define") {
         return handleDefine(items, env);
+    } else if (sym == "lambda") {
+        return handleLambda(items, env);
     } else if (sym == "if") {
         return handleIf(items, env);
     } else if (sym == "and") {
@@ -33,15 +38,21 @@ SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
     }
 }
 
+
+
 SyntaxTree handleDefine(const list<SyntaxTree>& items,
                         Frame & env) {
 
     auto pitem = next(items.begin());
 
+    // define a variable
     if (pitem->isSymbol()) {
         SyntaxTree value = eval_expr(SyntaxTree(*next(pitem)), env);
         env.insert(get<Symbol>(pitem->value), value);
-    } else if (pitem->isSubexpr()) {
+    }
+
+    // define a procedure
+    else if (pitem->isSubexpr()) {
         Symbol sym = get<string>(pitem->items.front().value);
 
         list<Symbol> params;
@@ -57,6 +68,21 @@ SyntaxTree handleDefine(const list<SyntaxTree>& items,
 
     return SyntaxTree_::nil;
 }
+
+SyntaxTree handleLambda(const list<SyntaxTree> & items, Frame & env) {
+    auto pitem = next(items.begin());
+
+    list<Symbol> params;
+    for(auto p = (pitem->items).begin(); p != (pitem->items).end(); p = next(p)) {
+        params.emplace_back(get<Symbol>(p->value));
+    }
+    list<SyntaxTree> content = next(pitem)->items;
+    SyntaxTree_::Lambda lamb(params, content, &env);
+    
+    return SyntaxTree(lamb, LAMBDA);
+}
+
+
 
 SyntaxTree handleIf(const list <SyntaxTree> & items,
                     Frame & env) {
@@ -103,3 +129,5 @@ SyntaxTree handleNot(const std::list<SyntaxTree> & items, Frame & env) {
 
     return SyntaxTree(true, BOOL);
 }
+
+

@@ -29,6 +29,12 @@ int main(int, char**){
     }
 }
 
+
+
+bool isQuote(const Symbol & sym);
+bool isVariable(const Symbol & sym);
+bool isString(const Symbol & sym);
+
 void displayResult(const SyntaxTree & result) {
     using std::cin, std::cout, std::endl, std::get;
 
@@ -45,6 +51,13 @@ void displayResult(const SyntaxTree & result) {
             cout << "#t" << endl;
         } else {
             cout << "#f" << endl;
+        }
+    } else if (result.isSymbol()) {
+        string value = std::get<Symbol>(result.value);
+        if (isQuote(value)) {
+            cout << value.substr(1, value.length()-1) << endl;
+        } else if (isString(value)) {
+            cout << value << endl;
         }
     }
 }
