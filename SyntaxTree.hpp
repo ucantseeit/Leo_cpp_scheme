@@ -14,17 +14,11 @@ typedef std::string Symbol;
 class Frame;
 
 
-typedef enum {NIL, INT, FLOAT, BOOL, PROC, LAMBDA, SYMBOL, SUBEXPR} dataType;
+typedef enum {NIL, INT, FLOAT, BOOL, PROC, LAMBDA, SYMBOL, SUBEXPR, PAIR} dataType;
 
 namespace SyntaxTree_ {
     using std::string, std::vector, std::variant, std::holds_alternative, std::get, std::list;
     using std::cout, std::endl;
-    using tokens::token;
-
-
-
-    typedef std::vector<token>::iterator tokenptr;
-
 
     class SyntaxTree{
     public:
@@ -38,8 +32,11 @@ namespace SyntaxTree_ {
             Lambda(const Lambda & rhs) : 
                 params(rhs.params), content(rhs.content), pLocalFrame(rhs.pLocalFrame) {};
         };
+
+        typedef std::vector<SyntaxTree> Pair;
+
         typedef SyntaxTree (*Proc) (const list<SyntaxTree> &);
-        typedef variant<Int, Float, Bool, Proc, Lambda, Symbol> valueType;
+        typedef variant<Int, Float, Bool, Proc, Lambda, Symbol, Pair> valueType;
 
     public:
         valueType value;
@@ -63,6 +60,7 @@ namespace SyntaxTree_ {
         bool isLambda() const {return type == LAMBDA;}
         bool isSymbol() const {return type == SYMBOL;}
         bool isSubexpr() const {return type == SUBEXPR;}
+        bool isPair() const {return type == PAIR;}
         
 
 

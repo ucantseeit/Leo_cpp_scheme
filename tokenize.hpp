@@ -14,6 +14,7 @@ namespace tokens {
     extern std::unordered_set<char> delimeter;
 
     vector<token> tokenize(std::istream & input);
+    typedef vector<token>::iterator tokenptr;
 }
 
 

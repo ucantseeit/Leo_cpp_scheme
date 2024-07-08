@@ -22,6 +22,8 @@ SyntaxTree Frame::lookup(const string & symbol) const {
 
 Frame setGlobalFrame() {
     Frame gFrame;
+    gFrame.insert("nil", SyntaxTree_::nil);
+
     gFrame.insert("+", SyntaxTree(&add, PROC));
     gFrame.insert("-", SyntaxTree(&minus, PROC));
     gFrame.insert("*", SyntaxTree(&multiple, PROC));
@@ -38,6 +40,11 @@ Frame setGlobalFrame() {
     gFrame.insert("#f", SyntaxTree(false, BOOL));
 
     gFrame.insert("load", SyntaxTree(&load, PROC));
+    gFrame.insert("cons", SyntaxTree(&cons, PROC));
+    gFrame.insert("car", SyntaxTree(&car, PROC));
+    gFrame.insert("cdr", SyntaxTree(&cdr, PROC));
+    gFrame.insert("list", SyntaxTree(&list_t, PROC));
+
 
 
     return gFrame;

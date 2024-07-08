@@ -151,6 +151,7 @@ SyntaxTree_::SyntaxTree lessEqual(const std::list<SyntaxTree_::SyntaxTree> & arg
 void displayResult(const SyntaxTree & result);
 
 SyntaxTree_::SyntaxTree load(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
+    using tokens::token, tokens::tokenptr;
     string fileName = get<Symbol>(arguments.front().value);
     fileName = fileName.substr(1, fileName.size()-2);
     
@@ -172,6 +173,28 @@ SyntaxTree_::SyntaxTree load(const std::list<SyntaxTree_::SyntaxTree> & argument
 }
 
 
+SyntaxTree cons(const std::list<SyntaxTree> & arguments) {
+    SyntaxTree::Pair result = {arguments.front(), *std::next(arguments.begin())};
+    return SyntaxTree(result, PAIR);
+}
+
+
+SyntaxTree car(const std::list<SyntaxTree> & arguments) {
+    return get<SyntaxTree::Pair>(arguments.front().value)[0];
+}
+SyntaxTree cdr(const std::list<SyntaxTree> & arguments) {
+    return get<SyntaxTree::Pair>(arguments.front().value)[1];
+}
+
+SyntaxTree list_t(const std::list<SyntaxTree> & arguments) {
+    if (arguments.size() == 0) {
+        return nil;
+    }
+
+    SyntaxTree item1 = arguments.front();
+    SyntaxTree item2 = list_t(list(next(arguments.begin()), arguments.end()));
+    return cons({item1, item2});
+}
 
 
 

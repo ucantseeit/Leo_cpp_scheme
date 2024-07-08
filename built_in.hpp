@@ -26,5 +26,11 @@ class Frame;
 extern Frame global_env;
 SyntaxTree load(const std::list<SyntaxTree> & arguments);
 
+SyntaxTree cons(const std::list<SyntaxTree> & arguments);
+SyntaxTree car(const std::list<SyntaxTree> & arguments);
+SyntaxTree cdr(const std::list<SyntaxTree> & arguments);
+SyntaxTree list_t(const std::list<SyntaxTree> & arguments);
+
+
 
 #endif

@@ -8,13 +8,11 @@
 
 
 namespace parser {
-    using tokens::token;
+    using tokens::token, tokens::tokenptr;
     using namespace SyntaxTree_;
 
     bool isInt(const string & word);
     bool isFloat(const string & word);
-
-    typedef vector<token>::iterator tokenptr;
 
     SyntaxTree parse(tokenptr & track);
 }
