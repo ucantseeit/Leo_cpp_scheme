@@ -46,7 +46,10 @@ SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
 
 SyntaxTree handleDefine(const list<SyntaxTree>& items,
                         Frame & env) {
-
+    
+    if (items.size() != 3) {
+        throw std::invalid_argument("bad syntax in define.");
+    }
     auto pitem = next(items.begin());
 
     // define a variable
@@ -61,6 +64,7 @@ SyntaxTree handleDefine(const list<SyntaxTree>& items,
 
         list<Symbol> params;
         for (auto p = next(pitem->items.begin()); p != pitem->items.end(); p = next(p)) {
+            if (!p->isSymbol()) {throw std::invalid_argument("bad syntax in lambda.");}
             params.emplace_back(get<Symbol>(p->value));
         }
         list<SyntaxTree> content = next(pitem)->items;
@@ -70,14 +74,25 @@ SyntaxTree handleDefine(const list<SyntaxTree>& items,
         env.insert(sym, value);
     }
 
+    else {
+        throw std::invalid_argument("bad syntax in define.");
+    }
+
     return SyntaxTree_::nil;
 }
 
 SyntaxTree handleLambda(const list<SyntaxTree> & items, Frame & env) {
+    if (items.size() != 3) {
+        throw std::invalid_argument("bad syntax in lambda.");
+    }
     auto pitem = next(items.begin());
+    if (!pitem->isSubexpr()) {
+        throw std::invalid_argument("bad syntax in lambda.");
+    }
 
     list<Symbol> params;
     for(auto p = (pitem->items).begin(); p != (pitem->items).end(); p = next(p)) {
+        if (!p->isSymbol()) {throw std::invalid_argument("bad syntax in lambda.");}
         params.emplace_back(get<Symbol>(p->value));
     }
     list<SyntaxTree> content = next(pitem)->items;
@@ -90,6 +105,9 @@ SyntaxTree handleLambda(const list<SyntaxTree> & items, Frame & env) {
 
 SyntaxTree handleIf(const list <SyntaxTree> & items,
                     Frame & env) {
+    if (items.size() != 4) {
+        throw std::invalid_argument("bad syntax in if.");
+    }
     auto pitem = next(items.begin());
 
     SyntaxTree predicate = eval_expr(*pitem, env);
@@ -106,6 +124,9 @@ SyntaxTree handleIf(const list <SyntaxTree> & items,
 SyntaxTree handleCond(const list<SyntaxTree> & items,
                       Frame & env) {
     for (auto pitem = next(items.begin()); pitem != items.end();pitem = next(pitem)) {
+        if (pitem->items.size() != 2) {
+            throw std::invalid_argument("bad syntax in cond.");
+        }
         SyntaxTree firstItem = pitem->items.front();
         SyntaxTree secondItem = *next(pitem->items.begin());
 
@@ -145,6 +166,9 @@ SyntaxTree handleOr(const std::list<SyntaxTree> & items, Frame & env) {
 }
 
 SyntaxTree handleNot(const std::list<SyntaxTree> & items, Frame & env) {
+    if (items.size() != 2) {
+        throw std::invalid_argument("bad syntax in not");
+    }
     auto res = eval_expr(*next(items.begin()), env);
     if (!res.isBool() || get<Bool>(res.value) == true) {
         return SyntaxTree(false, BOOL);

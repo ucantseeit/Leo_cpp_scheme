@@ -9,14 +9,13 @@ void Frame::insert(const string & symbol, const SyntaxTree & content) {
     symbolTable[symbol] = content;
 }
 
-SyntaxTree Frame::lookup(const string & symbol) const {
+Frame::pItem Frame::lookup(const string & symbol) const {
     if (symbolTable.find(symbol) != symbolTable.end()) {
-        return symbolTable.at(symbol);
+        return symbolTable.find(symbol);
     } else if (symbolTable.find(symbol) == symbolTable.end() && parentFrame != nullptr) {
         return parentFrame->lookup(symbol);
     } else {
-        std::cout << "the variable " << symbol << " is not defined" << std::endl;
-        return SyntaxTree(-1, INT);
+        return global_env.symbolTable.end();
     }
 }
 

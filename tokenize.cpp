@@ -2,7 +2,7 @@
 #include <exception>
 #include "tokenize.hpp"
 
-namespace tokens {
+namespace tokenizer {
 
     std::unordered_set<char> delimeter = {' ', '\t', '\n'};
 

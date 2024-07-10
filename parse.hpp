@@ -8,12 +8,13 @@
 
 
 namespace parser {
-    using tokens::token, tokens::tokenptr;
+    using tokenizer::token, tokenizer::tokenptr;
     using namespace SyntaxTree_;
 
     bool isInt(const string & word);
     bool isFloat(const string & word);
 
+    bool isMatchBracket(vector<token> & tokens);
     SyntaxTree parse(tokenptr & track);
 }
 #endif

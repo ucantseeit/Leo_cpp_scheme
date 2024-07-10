@@ -1,6 +1,22 @@
 #include "parse.hpp"
+#include "stack"
 
 namespace parser {
+    bool isMatchBracket(vector<token> & tokens) {
+        std::stack<token> s;
+        for (auto & p : tokens) {
+            if (p == "(") {
+                s.push(p);
+            } else if (p == ")" && !s.empty()) {
+                s.pop();
+            } else if (p == ")" && s.empty()) {
+                return false;
+            }
+        }
+
+        return s.empty();
+    }
+
     SyntaxTree parse(tokenptr & track) {
         if (*track == "(") {
             track++;

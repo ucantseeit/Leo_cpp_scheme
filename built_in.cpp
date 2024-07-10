@@ -151,13 +151,13 @@ SyntaxTree_::SyntaxTree lessEqual(const std::list<SyntaxTree_::SyntaxTree> & arg
 void displayResult(const SyntaxTree & result);
 
 SyntaxTree_::SyntaxTree load(const std::list<SyntaxTree_::SyntaxTree> & arguments) {
-    using tokens::token, tokens::tokenptr;
+    using tokenizer::token, tokenizer::tokenptr;
     string fileName = get<Symbol>(arguments.front().value);
     fileName = fileName.substr(1, fileName.size()-2);
     
     std::ifstream inputFile(fileName);
     if (inputFile.is_open()) {
-        vector<token> ts = tokens::tokenize(inputFile);
+        vector<token> ts = tokenizer::tokenize(inputFile);
 
         auto pts = ts.begin();
         while (pts != ts.end()) {

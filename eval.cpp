@@ -11,24 +11,56 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
 
     if (expr.isLeaf()) {
         if (expr.isSymbol() && isVariable(get<Symbol>(expr.value))) {
-            SyntaxTree result = env.lookup(get<Symbol>(expr.value));
-            return eval_expr(result, env);
+            auto result = env.lookup(get<Symbol>(expr.value));
+            if (result == global_env.endOfFrame()) {
+                throw std::invalid_argument(
+                    "the symbol " + get<Symbol>(expr.value) + "is undefined.");
+            }
+            return eval_expr(result->second, env);
         } else {
             return expr;
         }
     }
     
-    // TODO: the expr may also begins with subexpr / exception
-    Symbol sym = get<Symbol>(expr.items.front().value);
+    Symbol sym;   SyntaxTree findSymResult;  
+    Proc op = nullptr;
+    if (expr.items.front().isSymbol()) {
+        sym = get<Symbol>(expr.items.front().value);
+    } else if (expr.items.front().isSubexpr()) {
+        auto item = eval_expr(expr.items.front(), env);
+        if (item.isSymbol()) {
+            sym = get<Symbol>(item.value);
+        }  else if (item.isProc()) {
+            op = get<Proc>(item.value);
+        } else {
+            throw std::invalid_argument(
+                "the first item in the parentheses is not a procedure");
+        }
+    } else {
+        throw std::invalid_argument(
+            "the first item in the parentheses is not a procedure");
+    }
+    
+
+
 
     // handle special forms
-    if (specialForms.find(sym) != specialForms.end()) {
+    if (!sym.empty() && specialForms.find(sym) != specialForms.end()) {
         return handleSpecialForms(expr.items, env);
     }
 
+    if (!sym.empty() && env.lookup(sym) == env.endOfFrame()) {
+        throw std::invalid_argument(
+            sym + " is undefined.");
+    } else if (!sym.empty()) {
+        findSymResult = env.lookup(sym)->second;
+    }
+
     // handle the built-in procedures
-    if (env.lookup(sym).isProc()) {
-        const Proc op = get<Proc>(env.lookup(sym).value);
+    if (findSymResult.isProc()) {
+        op = get<Proc>(findSymResult.value);
+    }
+    if (op != nullptr) {
         list<SyntaxTree> arguments;
         auto track = std::next(expr.items.begin());
         for (; track != expr.items.end();
@@ -44,9 +76,9 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
     } 
     
     // handle the user-defined functions
-    if (env.lookup(sym).isLambda()) {
+    if (findSymResult.isLambda()) {
         // create a new frame to evaluate the call
-        Lambda lamb = get<Lambda>(env.lookup(sym).value);
+        Lambda lamb = get<Lambda>(findSymResult.value);
         Frame newFrame(lamb.pLocalFrame);
 
         // get the arguments of the call
@@ -62,7 +94,8 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
         }
 
         if (lamb.params.size() != arguments.size()) {
-            cout << "Too many/few arguments for the call to " << sym << endl;
+            throw std::invalid_argument(
+                "arity is not matched");
         }
 
         // bind the arguments to the formal parameters
@@ -75,8 +108,6 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
         return eval_expr(lamb.content, newFrame);
     }
 
-    cout << "sth wrong in eval" << endl;
     return nil;
 }
-
 

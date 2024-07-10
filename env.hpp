@@ -11,10 +11,12 @@ class Frame {
 private:
     unordered_map<string, SyntaxTree> symbolTable;
     const Frame * parentFrame = nullptr;
+    typedef unordered_map<string, SyntaxTree>::const_iterator pItem;
 
 public:
     void insert(const string & symbol, const SyntaxTree & content);
-    SyntaxTree lookup(const string & symbol) const;
+    pItem lookup(const string & symbol) const;
+    pItem endOfFrame() const {return symbolTable.end();}
 
     Frame() = default;
     Frame(const Frame * pFrame) : parentFrame(pFrame) {}

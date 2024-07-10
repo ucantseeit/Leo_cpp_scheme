@@ -1,6 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <exception>
 #include "tokenize.hpp"
 #include "parse.hpp"
 #include "eval.hpp"
@@ -12,20 +13,31 @@ void displayResult(const SyntaxTree & st);
 
 int main(int, char**){
 
-    using namespace tokens;
+    using namespace tokenizer;
     using namespace parser;
 
     std::istream & input = std::cin;
     while(true) {
         cout << ">> ";
 
-        vector<token> ts = tokenize(input);
+        vector<token> tokens = tokenize(input);
 
-        auto pts = ts.begin();
-        while (pts != ts.end()) {
+        if (!isMatchBracket(tokens)) {
+            cout << "Error, parentheses are not matched." << endl;
+            continue;
+        }
+
+        auto pts = tokens.begin();
+        while (pts != tokens.end()) {
             SyntaxTree st = parse(pts);
 
-            SyntaxTree result = eval_expr(st, global_env);
+            SyntaxTree result;
+            try {
+                result = eval_expr(st, global_env);
+            } catch(std::invalid_argument& e) {
+                cout << "Error! " << e.what() << endl;
+                continue;
+            }
 
             displayResult(result);
             cout << endl;
