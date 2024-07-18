@@ -105,9 +105,17 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
             parg = next(parg);
         }
 
-        return eval_expr(lamb.content, newFrame);
+        // evaluate all the expressions in the body of user defined function
+        return eval_sequence(lamb.body, newFrame);
     }
 
     return nil;
 }
 
+SyntaxTree eval_sequence(const list<SyntaxTree> & exprs, Frame & env) {
+    for (auto pexpr = exprs.begin(); next(pexpr) != exprs.end();
+         pexpr++) {
+        eval_expr(*pexpr, env);
+    }
+    return eval_expr(exprs.back(), env);
+}

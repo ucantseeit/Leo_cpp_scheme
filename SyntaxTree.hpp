@@ -24,13 +24,13 @@ namespace SyntaxTree_ {
     public:
         struct Lambda {
             list<Symbol> params;
-            list<SyntaxTree> content;
+            list<SyntaxTree> body;
             Frame * pLocalFrame;
 
             Lambda(const list<Symbol> & params_, const list<SyntaxTree> & content_, Frame * pl) :
-                params(params_), content(content_), pLocalFrame(pl) {}
+                params(params_), body(content_), pLocalFrame(pl) {}
             Lambda(const Lambda & rhs) : 
-                params(rhs.params), content(rhs.content), pLocalFrame(rhs.pLocalFrame) {};
+                params(rhs.params), body(rhs.body), pLocalFrame(rhs.pLocalFrame) {};
         };
 
         typedef std::vector<SyntaxTree> Pair;
@@ -45,6 +45,7 @@ namespace SyntaxTree_ {
 
     public:
         SyntaxTree() = default;
+        SyntaxTree(const SyntaxTree &) = default;
         SyntaxTree(const valueType & v, dataType t) : value(v), type(t) {}
         SyntaxTree(const list<SyntaxTree> & vl) : items(vl) {
             type = vl.empty() ? NIL : SUBEXPR ;
@@ -59,7 +60,7 @@ namespace SyntaxTree_ {
         bool isProc() const {return type == PROC;}
         bool isLambda() const {return type == LAMBDA;}
         bool isSymbol() const {return type == SYMBOL;}
-        bool isSubexpr() const {return type == SUBEXPR;}
+        bool isSubexpr() const {return type == SUBEXPR || type == NIL;}
         bool isPair() const {return type == PAIR;}
         
 
