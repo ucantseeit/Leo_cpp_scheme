@@ -14,7 +14,7 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
             auto result = env.lookup(get<Symbol>(expr.value));
             if (result == global_env.endOfFrame()) {
                 throw std::invalid_argument(
-                    "the symbol " + get<Symbol>(expr.value) + "is undefined.");
+                    "the symbol " + get<Symbol>(expr.value) + " is undefined.");
             }
             return eval_expr(result->second, env);
         } else {
@@ -59,7 +59,7 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
         Frame newFrame(lamb.pLocalFrame);
 
         // get the arguments of the call
-        list<SyntaxTree> arguments;
+        vector<SyntaxTree> arguments;
         auto track = std::next(expr.items.begin());
         for (; track != expr.items.end();
             track = next(track)) {
@@ -67,7 +67,7 @@ SyntaxTree eval_expr(const SyntaxTree & expr, Frame & env) {
                 arguments.emplace_back(eval_expr(*track, env));
             } else {
                 arguments.emplace_back(*track);
-            }       
+            }
         }
 
         if (lamb.params.size() != arguments.size()) {

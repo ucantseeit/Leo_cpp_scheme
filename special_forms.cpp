@@ -2,7 +2,7 @@
 
 using std::next, std::get, std::list, SyntaxTree_::Proc;
 
-std::unordered_set<Symbol> specialForms = {"define", "lambda", "if", "cond", "and", "or", "not", "begin"};
+std::unordered_set<Symbol> specialForms = {"define", "lambda", "if", "cond", "and", "or", "not", "begin", "let"};
 
 SyntaxTree handleDefine(const list<SyntaxTree>& items,
                         Frame& env);
@@ -19,6 +19,8 @@ SyntaxTree handleOr(const std::list<SyntaxTree> & items, Frame & env);
 SyntaxTree handleNot(const std::list<SyntaxTree> & items, Frame & env);
 
 SyntaxTree handleBegin(const std::list<SyntaxTree> & items, Frame & env);
+
+SyntaxTree handleLet(const std::list<SyntaxTree> & items, Frame & env);
 
 SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
                               Frame& env) {
@@ -40,6 +42,8 @@ SyntaxTree handleSpecialForms(const list<SyntaxTree>& items,
         return handleNot(items, env);
     } else if (sym == "begin") {
         return handleBegin(items, env);
+    } else if (sym == "let") {
+        return handleLet(items, env);
     } else {
         std::cerr << "sth wrong beforehand" << std::endl;
         return SyntaxTree_::nil;
@@ -208,5 +212,18 @@ SyntaxTree handleBegin(const std::list<SyntaxTree> & items, Frame & env) {
     return eval_sequence(exprs, env);
 }
 
+SyntaxTree handleLet(const std::list<SyntaxTree> & items, Frame & env) {
+    Frame newFrame(&env);
+    auto symbolValPairs = next(items.begin())->items;
+    for (auto p = symbolValPairs.begin();
+         p != symbolValPairs.end(); p++) {
+        Symbol sym = get<Symbol>(p->items.front().value);
+        SyntaxTree value = eval_expr(p->items.back(), env);
+        newFrame.insert(sym, value);
+    }
+
+    list<SyntaxTree> exprSeq(next(next(items.begin())), items.end());
+    return eval_sequence(exprSeq, newFrame);
+}
 
 

@@ -19,7 +19,7 @@ public:
     pItem endOfFrame() const {return symbolTable.end();}
 
     Frame() = default;
-    Frame(const Frame * pFrame) : parentFrame(pFrame) {}
+    explicit Frame(const Frame * pFrame) : parentFrame(pFrame) {}
 };
 
 Frame setGlobalFrame();
